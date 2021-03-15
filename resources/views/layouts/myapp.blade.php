@@ -16,13 +16,14 @@
        border-bottom:solid 1px #ccc; color:#ccc; }
     table {
         border-collapse: collapse; border: solid 2px #999;
+        border-width: 2px 0px;  /*  これにより、外枠は、上だけつきます！！  */
     }
     th {background-color: #0099ff; color:fff; padding:5px 10px; }
     td {border: solid 1px #aaa; color:#999; padding:5px 10px; }
     a { text-decoration: none; }
     /* 特定のセルだけボーダーなし */
     .noborder {
-    border: 0px none; 
+    border: 0px none;
     }
 
    </style>

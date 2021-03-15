@@ -22,4 +22,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/users', [ UsersController::class, 'index' ]);
+
+Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'destroy']]);
