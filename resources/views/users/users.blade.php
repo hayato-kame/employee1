@@ -10,12 +10,18 @@
     <tr>
         <td>{{$user->id}}</td>
         <td>{{$user->name}}</td>
+        @auth
         <td>
-            {!! link_to('users/show', '詳細ページ', ['user' => $user->id]) !!}
+            {{-- 自分だけが見れるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
+            <button>{!! link_to('users/show', '詳細ページ', ['user' => Auth::id()]) !!}</button>
+
         </td>
         <td>
-            {!! link_to('users/destroy', '削除ページ', ['user' => $user->id]) !!}
+
+            {{-- 自分だけが削除できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
+            <button>{!! link_to('users/destroy', '削除ページ', ['user' => Auth::id()]) !!}</button>
         </td>
+        @endauth
     </tr>
     @endforeach
 </table>
