@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 // index show destroy のみ createアクションやstoreアクションはjetstreamで実装されてるので不要です
 // ここでは作成しませんが、ユーザが自分の名前を編集するアクション（edit, update)や退会アクション（destroy)を作っても問題ありませんし、さらにユーザの登録情報（年齢や自己紹介など）を充実（usersテーブルのカラム追加）させても良いでしょう。これらはUsersControllerに実装すれば実現可能
 
@@ -23,26 +24,7 @@ class UsersController extends Controller
         return view('users.index', [ 'users' => $users]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // create   storeアクションは jetstreamで実装されてるので不要
 
     /**
      * Display the specified resource.
@@ -52,7 +34,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        // $user = User::find($id);
+        // これでもいい
+        $user = Auth::user();
         return view('users.show', [ 'user' => $user]);
     }
 
