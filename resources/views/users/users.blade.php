@@ -11,16 +11,18 @@
         <td>{{$user->id}}</td>
         <td>{{$user->name}}</td>
         @auth
-        <td>
+            @if($user == Auth::user())
+        <td class="noborder">
             {{-- 自分だけが見れるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
             <button>{!! link_to('users/show', '詳細ページ', ['user' => Auth::id()]) !!}</button>
 
         </td>
-        <td>
+        <td class="noborder">
 
             {{-- 自分だけが削除できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
             <button>{!! link_to('users/destroy', '削除ページ', ['user' => Auth::id()]) !!}</button>
         </td>
+            @endif
         @endauth
     </tr>
     @endforeach

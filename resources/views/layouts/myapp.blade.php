@@ -20,6 +20,10 @@
     th {background-color: #0099ff; color:fff; padding:5px 10px; }
     td {border: solid 1px #aaa; color:#999; padding:5px 10px; }
     a { text-decoration: none; }
+    /* 特定のセルだけボーダーなし */
+    .noborder {
+    border: 0px none; 
+    }
 
    </style>
 </head>
