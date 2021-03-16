@@ -84,7 +84,7 @@ class PasswordController extends Controller
             return redirect()->back()->with('flash_message', '現在のパスワードが間違っています。');
         }
 
-        //現在のパスワードと新しいパスワードが違っているかを調べる
+        //現在のパスワードと新しいパスワードが違っているかを調べる  strcmp  が0 を返せば 等しい
         if(strcmp($request->get('current_password'), $request->get('password')) == 0) {
             return redirect()->back()->with('flash_message', '新しいパスワードが現在のパスワードと同じです。違うパスワードを設定してください。');
         }

@@ -24,9 +24,7 @@
 
             <div class="toolbar">{!! link_to_route('users.show', 'ユーザ詳細ページへ戻る',['user' => Auth::id()]) !!}</div>
 
-            <div class="row">
-                <div class="col-sm-6 offset-sm-3">
-
+            
                     {{-- $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
                     {!! Form::model($user, ['route' => ['password.update', Auth::user()->id], 'method' => 'put']) !!}
                    
@@ -57,8 +55,7 @@
 
             
 
-                </div>
-            </div>
+          
 
 
 
