@@ -19,8 +19,10 @@
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
+                    
+                    {{-- 自分だけが編集  削除  できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
                     @if($user == Auth::user())
-                    <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('users.edit', '編集', ['user' => $user->id]) !!}</button></td>
+                    <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('users.edit', '編集', ['user' => Auth::user()->id]) !!}</button></td>
 
                     <td>{!! Form::open(['route' => ['users.destroy', Auth::user()->id], 'method' => 'delete'])  !!}
                         {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm', 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
@@ -28,7 +30,6 @@
                 </tr>
             </table>
 
-                {{-- 自分だけが編集  削除  できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
 
             @endif
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 // ここでは作成しませんが、ユーザが自分の名前を編集するアクション（edit, update)や退会アクション（destroy)を作っても問題ありませんし、さらにユーザの登録情報（年齢や自己紹介など）を充実（usersテーブルのカラム追加）させても良いでしょう。これらはUsersControllerに実装すれば実現可能
 
 
-//  ルートに制限 ['only' => ['index', 'show', 'destroy']]
+//  ルートに制限 ['only' => ['index', 'show', 'edit', 'update', 'destroy']
 
 class UsersController extends Controller
 {
@@ -20,7 +20,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'asc')->paginate(8);
+        $users = User::orderBy('id', 'desc')->paginate(8);
         return view('users.index', [ 'users' => $users]);
     }
 
@@ -51,7 +51,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();  // 引数いらない
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
