@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>@yield('title')</title>
+   <title>@yield('title') | {{ config('app.name') }}</title>
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
    <style>
@@ -24,6 +24,19 @@
     /* 特定のセルだけボーダーなし */
     .noborder {
     border: 0px none;
+    }
+    
+    ul.toolbar , div.toolbar{
+    margin: 20px;
+    text-align: right;
+    }
+
+    /* フラッシュ */
+    p.notice {
+    border: 1px solid blue;
+    padding: 3px;
+    background-color: #ccf;
+    border-radius: 5px;
     }
 
    </style>
