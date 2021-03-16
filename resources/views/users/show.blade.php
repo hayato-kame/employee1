@@ -28,12 +28,7 @@
                 </tr>
             </table>
 
-
-
                 {{-- 自分だけが編集  削除  できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
-
-
-
 
             @endif
 
