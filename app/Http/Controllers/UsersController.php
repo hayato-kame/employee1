@@ -20,7 +20,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->paginate(5);
+        $users = User::orderBy('id', 'asc')->paginate(8);
         return view('users.index', [ 'users' => $users]);
     }
 
@@ -34,6 +34,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        // デバック関数  dd()
+        // dd($id);
+
         // $user = User::find($id);
         // これでもいい
         $user = Auth::user();
