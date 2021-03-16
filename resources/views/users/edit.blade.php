@@ -22,6 +22,7 @@
                     {{-- $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
                     {!! Form::model($user, ['route' => ['users.update', Auth::user()->id], 'method' => 'put']) !!}
 
+                   
                         <div class="form-group">
                             {!! Form::label('name', 'Name:') !!}
                             {!! Form::text('name', null, ['class' => 'form-control']) !!}

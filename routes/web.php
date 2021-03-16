@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+// use App\Actions\Fortify\PasswordController;
 use App\Http\Controllers\PasswordController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

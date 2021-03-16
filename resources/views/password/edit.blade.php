@@ -29,7 +29,7 @@
 
                     {{-- $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
                     {!! Form::model($user, ['route' => ['password.update', Auth::user()->id], 'method' => 'put']) !!}
-
+                   
                     <div class="row">
                         <div class="col-sm-6 offset-sm-3">
                             <table class="table table-striped">

@@ -13,6 +13,14 @@
         @if(isset($user))
             <h3>{{ $user->name }}さんの詳細ページ</h3>
 
+            {{-- フラッシュメッセージ --}}
+            @if (session('flash_message'))
+
+            <p class="notice">
+              メッセージ：{{ session('flash_message') }}
+            </p>
+            @endif
+
             <table>
                 <tr><th>id</th><th>name</th><th>email</th><th></th><th></th><th></th></tr>
                 <tr>
