@@ -14,7 +14,7 @@
             <h3>{{ $user->name }}さんの詳細ページ</h3>
 
             <table>
-                <tr><th>id</th><th>name</th><th>email</th><th></th><th></th></tr>
+                <tr><th>id</th><th>name</th><th>email</th><th></th><th></th><th></th></tr>
                 <tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
@@ -22,7 +22,13 @@
                     
                     {{-- 自分だけが編集  削除  できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
                     @if($user == Auth::user())
-                    <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('users.edit', '編集', ['user' => Auth::user()->id]) !!}</button></td>
+                    <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('users.edit', 'ユーザー情報編集', ['user' => Auth::user()->id]) !!}</button></td>
+
+                    {{--  
+                         大切！！！ パスワード変更ページへのリンクです ['password' => Auth::user()->id] では、 {}のなかに入るものを指定してます
+                    　password/{password}/edit        ルートの名前はこれ password.edit  
+                     --}}
+                    <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('password.edit', 'パスワード変更', ['password' => Auth::user()->id]) !!}</button></td>
 
                     <td>{!! Form::open(['route' => ['users.destroy', Auth::user()->id], 'method' => 'delete'])  !!}
                         {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm', 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
@@ -31,7 +37,7 @@
             </table>
 
 
-            @endif
+                    @endif
 
         @endif
 
