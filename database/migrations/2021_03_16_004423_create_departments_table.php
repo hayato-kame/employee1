@@ -21,10 +21,8 @@ class CreateDepartmentsTable extends Migration
             $table->string('department_id', 20)->primary(); // 文字列の部署名
 
             $table->string('department_name', 20);
-            // 今回は timestampsを利用しないことにする
+            // timestampsを利用しないことにする
             // $table->timestamps();
-
-            
         });
     }
 

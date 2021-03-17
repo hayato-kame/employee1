@@ -12,17 +12,14 @@ class Photo extends Model
     //primaryKeyの変更
     protected $primaryKey = 'photo_id';
     
+    protected $fillable = [];
+    protected $guarded = [];
 
-    // 利用上は 社員テーブル が 写真テーブル の親ということになるでしょう。
-    // つまり、社員の下に写真が存在しているという関係です
-    // 社員はたくさんの写真をもってる  (社員 hasMany 写真の関係)
-    // 写真は誰か一人の社員に所属している  (写真 belongsTo 社員）
-
-    //belongsTo設定 こっちが従テーブル
-    public function employee()  // 単数形のメソッドにする
+  
+    // hasOne設定　こっちが主テーブルです
+    public function employee()  //単数形のメソッドにする一人の人との関係を持ってるから
     {
-        return $this->belongsTo('App\Models\Employee');
+        return $this->hasOne('App\Models\Employee');
     }
-
 
 }
