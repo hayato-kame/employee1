@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Employee;
 
 
 class Department extends Model
@@ -27,7 +28,8 @@ class Department extends Model
     // hasMany設定　こっちが主テーブルです
     public function employees()  // 複数形のメソッドにする
     {
-        return $this->hasMany('App\Models\Employee');
+        // return $this->hasMany('App\Models\Employee');
+        return $this->hasMany(Employee::class, 'employee_id');
     }
 
 
