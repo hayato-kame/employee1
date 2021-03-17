@@ -9,8 +9,14 @@ class Employee extends Model
 {
     use HasFactory;
 
+    // 複合PKの これでsaveメソッドで更新処理が可能になりました。調べたらHasCompositePrimaryKey トレイトを使用すれば大丈夫なようだ
+    // HasCompositePrimaryKey トレイトの使用
+   // まずはComposerでインストール。composer require mopo922/laravel-treats
+// インストールが完了したら、Modelファイルでインポート。これでsaveメソッドで更新処理が可能になりました。
+    use \LaravelTreats\Model\Traits\HasCompositePrimaryKey;
+
 //primaryKeyの変更
-    protected $primaryKey = "employee_id";
+    protected $primaryKey = ["employee_id", "photo_id"];
 
 
     //利用上は部署テーブルが社員テーブルの親ということになるでしょう。
