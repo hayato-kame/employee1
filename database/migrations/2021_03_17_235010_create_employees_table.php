@@ -27,8 +27,9 @@ class CreateEmployeesTable extends Migration
             // 入れたら、プライマリーキーとして登録されてしまいます。第二引数が0以外になると、true になってしまう
             $table->string('gender', 1);  // 文字長を1に指定 　男  か　女
             
-            $table->unsignedInteger('photo_id');  // 外部キーのフィールド
+            $table->unsignedBigInteger('photo_id');  // 外部キーのフィールド
             // photos（主テーブル） と型を合わせてください
+            //このunsignedBigIntegerメソッドは、UNSIGNED BIGINT同等の列を作成します。
             // photos（主テーブル）の  incrementsメソッドは、UNSIGNED INTEGER主キーとして自動インクリメントの同等の列を作成します。     
             $table->string('zip_number' ,20);
             $table->string('pref', 20);

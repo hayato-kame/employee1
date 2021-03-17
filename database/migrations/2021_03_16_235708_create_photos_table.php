@@ -17,9 +17,10 @@ class CreatePhotosTable extends Migration
             // カラム名の命名規則はスネークケースかつ単数形
             // 参照される側のテーブルの項目はPRIMARY KEYでなくてはならない
            // こっちが主テーブルで、employeesが従テーブル
-           $table->increments('id'); //you save this id in other tables  データ型を合わせる
-            // incrementsメソッドは、UNSIGNED INTEGER主キーとして自動インクリメントの同等の列を作成します。
-           
+           $table->bigIncrements('photo_id'); // データ型を合わせる
+            // このbigIncrementsメソッドは、自動インクリメントUNSIGNED BIGINT（主キー）に相当する列を作成します。
+            // だから、従テーブルのemployeesでは、unsignedBigIntegerメソッドを使ってください
+            
             $table->binary('photo_data');
             $table->string('mime_type')->nullable();
             $table->timestamps();
