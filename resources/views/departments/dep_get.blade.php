@@ -40,16 +40,16 @@ $label = "";
             <div class="row">
                 <div class="col-sm-6 offset-sm-3">
 
-                    {{-- RESTのルーティングじゃないから　メソッドは postかなあ？ --}}
-                    {!! Form::model($department, ['route' => ['departments.dep_post', $department->department_id ], 'method' => 'put']) !!}
+                    {{-- RESTのルーティングじゃないから　メソッドは post --}}
+                    {!! Form::model($department, ['route' => ['departments.dep_post', $department->department_id ], 'method' => 'post']) !!}
 
-                   
                         <div class="form-group">
                             {!! Form::label('department_name', '部署名:') !!}
                             {!! Form::text('department_name', null, ['class' => 'form-control']) !!}
                         </div>
 
                         {!! Form::hidden('action', $action) !!}
+                        {{-- 新規の時にはdepartment_id にはnullが入って送られます --}}
                         {!! Form::hidden('department_id', $department->department_id) !!}
 
                     
