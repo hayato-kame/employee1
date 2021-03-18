@@ -36,5 +36,37 @@ class Employee extends Model
     {
         return $this->belongsTo(Photo::class,'photo_id');
     }
+
+    /**
+     * 住所を表示する
+     * 
+     * @return string
+     */
+    public function getFullAddress(): string {
+        return '〒' . $this->zip_number . $this->pref . $this->address;
+    }
+
+    /**
+     * 性別を int から strign型にする
+     * 
+     * @param int $gender
+     * @return string 1:男<br>2:女
+     */
+    public function getStringGender($gender) 
+    {
+        $str = "";
+        switch($gender) {
+            case 1: 
+                $str = "男";
+                break;
+            case 2: 
+                $str = "女";
+                break;
+        }
+        return $str;
+    }
+
+    // もう一つメソッド必要？？性別の
+
     
 }
