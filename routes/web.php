@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 // use App\Actions\Fortify\PasswordController;
@@ -27,3 +28,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 
 Route::resource('/password', PasswordController::class,['only' => ['show', 'edit', 'update']]);
+
+// 部署一覧ページなど、ログインしていないと、いけない
+Route::group(['middleware' => 'auth'], function() {
+  Route::resource('/departments', DepartmentsController::class, ['except' => ['show']]);
+});

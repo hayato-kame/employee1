@@ -17,6 +17,15 @@ class Department extends Model
     //primaryKeyの変更
     protected $primaryKey = "department_id";
 
+//     Eloquentでは主キーがオートインクリメントで増加する整数値であるとデフォルトで設定されています。
+// そのため、オートインクリメントまたは整数値ではない値を主キーを使う場合は$incrementingプロパティをfalseに設定します。
+     /**
+     * IDが自動増分されるか
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
     protected $fillable = ["department_id", "department_name"];
     protected $guarded = [];
 
