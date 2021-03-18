@@ -17,7 +17,7 @@ class Department extends Model
     //primaryKeyの変更
     protected $primaryKey = "department_id";
 
-    protected $fillable = [];
+    protected $fillable = ["department_id", "department_name"];
     protected $guarded = [];
 
     //利用上は部署テーブルが社員テーブルの親ということになるでしょう。

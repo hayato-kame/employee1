@@ -13,8 +13,8 @@ class Photo extends Model
     //primaryKeyの変更
     protected $primaryKey = 'photo_id';
     
-    protected $fillable = [];
-    protected $guarded = [];
+    protected $fillable = ['photo_data', 'mime_type'];
+    protected $guarded = ['photo_id'];
 
   
     // hasOne設定　こっちが主テーブルです

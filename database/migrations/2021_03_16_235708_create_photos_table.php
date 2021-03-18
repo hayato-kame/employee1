@@ -21,7 +21,7 @@ class CreatePhotosTable extends Migration
             // このbigIncrementsメソッドは、自動インクリメントUNSIGNED BIGINT（主キー）に相当する列を作成します。
             // だから、従テーブルのemployeesでは、unsignedBigIntegerメソッドを使ってください
             
-            $table->binary('photo_data');
+            $table->binary('photo_data')->nullable();
             $table->string('mime_type')->nullable();
             $table->timestamps();
             

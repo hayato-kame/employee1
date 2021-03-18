@@ -25,7 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name', 50);
             $table->integer('age'); //integerの第二引数には入れないでください！
             // 入れたら、プライマリーキーとして登録されてしまいます。第二引数が0以外になると、true になってしまう
-            $table->string('gender', 1);  // 文字長を1に指定 　男  か　女
+            $table->string('gender', 1); // 文字長を1に指定 　男  か　女
             
             $table->unsignedBigInteger('photo_id');  // 外部キーのフィールド
             // photos（主テーブル） と型を合わせてください
@@ -38,7 +38,7 @@ class CreateEmployeesTable extends Migration
             // 部署テーブルの従テーブルだから ひとつの部署にに属するから単数形で書く データ型きちんと合わせる
             $table->string('department_id');  //　外部キーのフィールドdepartments文字列型
             $table->datetime('hire_date'); // 入社日
-            $table->datetime('retire_date'); // 退社日
+            $table->datetime('retire_date')->nullable(); // 退社日
             $table->timestamps();
             // 写真テーブルの従テーブルです 
             // 部署テーブルの従テーブルです

@@ -15,8 +15,10 @@ class Employee extends Model
     //primaryKeyの変更
     protected $primaryKey = "employee_id";
     
-    protected $fillable = [];
-    protected $guarded = [];
+    protected $fillable = ['employee_id', 'name', 'age', 'gender', 'photo_id', 'zip_number' ,'pref', 'address',
+    'department_id', 'hire_date', 'retire_date'];
+    
+    protected $guarded = ['employee_id', 'retire_date'];
     
     
     //利用上は部署テーブルが社員テーブルの親ということになる。
