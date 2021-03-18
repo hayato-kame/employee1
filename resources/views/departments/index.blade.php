@@ -36,6 +36,7 @@
          {{-- RESTful じゃないから 'method' => 'put'  じゃない --}}
         <td>{!! Form::open(['route' => ['departments.dep_get', $department->department_id], 'method' => 'get'])  !!}
             {!! Form::hidden('action', "edit")  !!}
+            {!! Form::hidden('department_id', $department->department_id)  !!}
             {!! Form::hidden('department_name', $department->department_name)  !!}
             {!! Form::submit('編集', ['class' => 'btn btn-primary' ]) !!}
             {!! Form::close() !!}
@@ -44,7 +45,7 @@
         {{-- RESTful じゃないから 'method' => 'delete'  じゃない --}}
         <td>{!! Form::open(['route' => ['departments.dep_post', $department->department_id], 'method' => 'post'])  !!}
             {!! Form::hidden('action', "delete")  !!}
-            {!! Form::hidden('department_name', $department->department_name)  !!}
+            {!! Form::hidden('department_id', $department->department_id)  !!}
             {!! Form::submit('削除', ['class' => 'btn btn-danger' , 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
             {!! Form::close() !!}
         </td>   
@@ -55,6 +56,7 @@
 
 @endif
 <div>
+    {{-- 第三引数で ? のクエリー文字列を指定できてます --}}
 <button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('departments.dep_get', '部署新規作成ページ', ['action' => "add", ] , []) !!}</button>
 </div>
 

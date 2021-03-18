@@ -27,7 +27,7 @@ class Department extends Model
     public $incrementing = false;
 
     protected $fillable = ["department_id", "department_name"];
-    protected $guarded = [];
+    protected $guarded = ["department_id"];
 
     //利用上は部署テーブルが社員テーブルの親ということになるでしょう。
     // つまり、部署の下に社員が存在しているという関係です

@@ -60,16 +60,16 @@ $label = "";
                         {!! Form::hidden('action', $action) !!}
                         {{-- 新規の時にはdepartment_id にはnullが入って送られます --}}
                         {!! Form::hidden('department_id', $department->department_id) !!}
-
                     
                         {!! Form::submit('送信', ['class' => 'btn btn-primary' , 'confirm' => 'この内容で送信しますか？']) !!}
                     {!! Form::close() !!}  
                     
-
-                    {!! Form::model($department, ['route' => ['departments.dep_post', $department->department_id ], 'method' => 'put']) !!}
+                        <div style="margin-top:10px">
+                    {!! Form::model($department, ['route' => ['departments.dep_post', $department->department_id ], 'method' => 'post']) !!}
                         {!! Form::hidden('action', "cancel") !!}
                         {!! Form::submit('キャンセル', ['class' => 'btn btn-primary' ]) !!}
                     {!! Form::close() !!} 
+                        </div>
                 </div>
             </div>
 

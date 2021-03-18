@@ -16,22 +16,21 @@ class DepartmentsController extends Controller
 
     public function dep_get(Request $request)
     {
-        // 新規作成の時にはモデルのインスタンスを作って送ります（中身は空初期状態)
-        $department = new Department();
-    $action = $request->action;
-
-    $data = [
-        'department' => $department,
-        'action' => $action,
+        $action = $request->action;
         
-    ];
-
         switch($action) {
             case "add": 
-                 return view('departments.dep_get',$data);
+                // 新規作成の時にはモデルのインスタンスを作って送ります（中身は空初期状態)
+                $department = new Department();
+                 return view('departments.dep_get',
+                 ['department' => $department, 'action' => $action]);
                  break;
+
             case "edit": 
-                // 編集の処理
+                // 編集の処理 $request->department_id  $request->department_name hiddenで送られてる
+                $department = Department::find($request->department_id);
+                return view('departments.dep_get', 
+                [ 'department' => $department , 'action' => $action]);
                 break;
 
             case "delete": 
@@ -44,21 +43,22 @@ class DepartmentsController extends Controller
             }
     }
 
+
     public function dep_post(Request $request)
     {
  
-  $department = new Department();
-  $action = $request->action;
+        $department = new Department();
+        $action = $request->action;
 
-  $f_message = ''; // フラッシュメッセージを
+        $f_message = ''; // フラッシュメッセージを
 
-  //  新規で送信ボタンを押したときは $request->department_id には null が入ってます
+        //  新規で送信ボタンを押したときは $request->department_id には null が入ってます
   
     
       switch($action) {
           case "add": 
+                //新規作成の処理
                 $this->validate($request, Department::$rules, Department::$messages);
-               //新規作成の処理
                // 部署IDを作成する
                $last = DB::table('departments')->orderBy('department_id', 'desc')->first();
                $resultStrId = "D01";  // 初期値
@@ -75,18 +75,29 @@ class DepartmentsController extends Controller
               // 部署名プロパティにもセット
               $department->department_name = $request->department_name;
               $department->save();
-              $f_message = 'データ保存できました';
+              // フラッシュメッセージ設定
+              $f_message = 'データ新規保存しました';
                break;
+
           case "edit": 
               // 編集の処理
+              $this->validate($request, Department::$rules, Department::$messages);
+              $department = Department::find($request->department_id);
+              $department->department_name = $request->department_name;
+              $department->save();
+               // フラッシュメッセージ設定
+                $f_message = '部署名を変更しました';
               break;
 
           case "delete": 
               // 削除の処理
+              Department::find($request->department_id)->delete();
+             // フラッシュメッセージ設定
+             $f_message = '部署名を削除しました';
               break;
 
           case "cancel": 
-              // キャンセルの処理
+              // キャンセルの処理 部署一覧ページへ移るだけ
               break;
       }
       
