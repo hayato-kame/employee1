@@ -32,10 +32,10 @@
     <tr>
         <td>{{$department->department_id}}</td>
         <td>{{$department->department_name}}</td>
-        <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('departments.edit', '編集ページ', ['department' => $department->department_id]) !!}</button></td>
+        {{-- <td><button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('departments.edit', '編集ページ', ['department' => $department->department_id]) !!}</button></td>
         <td>{!! Form::open(['route' => ['departments.destroy', $department->department_id], 'method' => 'delete'])  !!}
             {!! Form::submit('削除', ['class' => 'btn btn-danger' , 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
-        {!! Form::close() !!}</td>   
+        {!! Form::close() !!}</td>    --}}
         
     </tr>
     @endforeach
@@ -43,7 +43,7 @@
 
 @endif
 <div>
-<button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('departments.create', '部署新規作成ページ', []) !!}</button>
+<button type="button" class="btn btn-light" display="inline-block">{!! link_to_route('departments.dep_get', '部署新規作成ページ', []) !!}</button>
 </div>
 
 @endsection

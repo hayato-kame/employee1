@@ -7,81 +7,47 @@ use App\Models\Department;
 
 class DepartmentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
         $departments = Department::all();
-        
         return view('departments.index', ['departments' => $departments]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function dep_get(Request $request)
     {
-        //
+        // 新規作成の時にはモデルのインスタンスを作って送ります（中身は空初期状態)
+        $department = new Department();
+    $action = $request->action;
+    // 新規で送信ボタンを押したときは、リクエストパラメータでは、部署IDは渡ってこない null が入ってる
+    $department_id = $request->department_id;
+    $department_name = $request->department_name;
+
+        switch($action) {
+            case "add": 
+                 //新規作成の処理
+                 break;
+            case "edit": 
+                // 編集の処理
+                break;
+
+            case "delete": 
+                // 削除の処理
+                break;
+
+            case "cancel": 
+                // キャンセルの処理
+                break;
+        }
+        $data = [
+            'department' => $department,
+            'action' =>$action,
+        ];
+
+        return view('departments.dep_get', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function dep_post(Request $request)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

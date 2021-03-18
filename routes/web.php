@@ -31,5 +31,11 @@ Route::resource('/password', PasswordController::class,['only' => ['show', 'edit
 
 // 部署一覧ページなど、ログインしていないと、いけない
 Route::group(['middleware' => 'auth'], function() {
-  Route::resource('/departments', DepartmentsController::class, ['except' => ['show']]);
+    Route::get('/departments',  [ DepartmentsController::class, 'index'] )->name('departments.index');
+
+    Route::get('/departments/dep_get',  [ DepartmentsController::class, 'dep_get'] )->name('departments.dep_get');
+    Route::post('/departments/dep_get',  [ DepartmentsController::class, 'dep_post'] )->name('departments.dep_post');
+
+    //   Route::resource('/departments', DepartmentsController::class, ['except' => ['show']]);
+
 });
