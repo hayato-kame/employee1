@@ -23,6 +23,7 @@ class DepartmentsController extends Controller
     $data = [
         'department' => $department,
         'action' => $action,
+        
     ];
 
         switch($action) {
@@ -48,12 +49,15 @@ class DepartmentsController extends Controller
  
   $department = new Department();
   $action = $request->action;
-  // 新規で送信ボタンを押したときは、リクエストに、department_idには null が入ってる
-  //  $request->department_id には null が入ってます
-  
 
+  $f_message = ''; // フラッシュメッセージを
+
+  //  新規で送信ボタンを押したときは $request->department_id には null が入ってます
+  
+    
       switch($action) {
           case "add": 
+                $this->validate($request, Department::$rules, Department::$messages);
                //新規作成の処理
                // 部署IDを作成する
                $last = DB::table('departments')->orderBy('department_id', 'desc')->first();
@@ -71,6 +75,7 @@ class DepartmentsController extends Controller
               // 部署名プロパティにもセット
               $department->department_name = $request->department_name;
               $department->save();
+              $f_message = 'データ保存できました';
                break;
           case "edit": 
               // 編集の処理
@@ -86,6 +91,6 @@ class DepartmentsController extends Controller
       }
       
 
-      return redirect('/departments');
+      return redirect('/departments')->with('flash_message', $f_message);;
     }
 }

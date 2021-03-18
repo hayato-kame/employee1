@@ -25,6 +25,15 @@ $label = "";
 @endsection
 
 @section('content')
+    
+       
+        @if (count($errors) > 0)
+            <p>入力に問題があります</p>
+        @endif
+
+        @error('department_name')
+        <p>{{$message}}</p>
+        @enderror
   
         @if(isset($department))
             <h3>部署の{{$label}}ページ</h3>

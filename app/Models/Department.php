@@ -41,5 +41,15 @@ class Department extends Model
         return $this->hasMany(Employee::class, 'employee_id');
     }
 
+    // バリデーションのルール
+    public static $rules = [
+        'department_name' => 'required',
+    ];
+
+    // エラーメッセージ
+    public static $messages = [
+        'department_name.required' => '部署名は必ず入れてください',
+    ];
+
 
 }
