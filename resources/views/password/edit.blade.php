@@ -9,7 +9,9 @@
 
 @section('content')
     {{-- 自分だけが編集  削除  できるようにすること $user->id ではなくAuth::id()  Auth::user()->id と同じ --}}
+    
     {{-- @if (Auth::check()) @else  @endif  と同じ意味の  @auth  @else  @endauth  --}}
+    {{-- @auth は、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
     @auth
         @if(isset($user))
             <h3>{{ $user->name }}さんのパスワード編集ページ</h3>

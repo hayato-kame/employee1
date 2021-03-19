@@ -1,4 +1,6 @@
 {{-- @authによってログインしてるユーザだけ見られる --}}
+    {{-- @auth @else @endauth は、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
+
 @auth
 @if (count($users) > 0)
 

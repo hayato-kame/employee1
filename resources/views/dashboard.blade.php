@@ -1,4 +1,5 @@
 <x-app-layout>
+  
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -39,7 +40,7 @@
                              of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials. --}}
                         
                              <li><a href="{{ url('/departments') }}" class="text-lg text-gray-700 underline">部署一覧画面</a></li>
-                             <li><a href="{{ url('/') }}" class="text-lg text-gray-700 underline">従業員一覧画面</a></li>
+                             <li><a href="{{ url('/employees') }}" class="text-lg text-gray-700 underline">従業員一覧画面</a></li>
                             </div>
                         </div>
                     </div>

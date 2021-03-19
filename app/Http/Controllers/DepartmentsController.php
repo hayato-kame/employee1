@@ -14,7 +14,7 @@ class DepartmentsController extends Controller
         return view('departments.index', ['departments' => $departments]);
     }
 
-    public function dep_get(Request $request)
+    public function depGet(Request $request)
     {
         $action = $request->action;
         
@@ -44,17 +44,15 @@ class DepartmentsController extends Controller
     }
 
 
-    public function dep_post(Request $request)
-    {
- 
+    public function depPost(Request $request)
+    { 
         $department = new Department();
         $action = $request->action;
 
         $f_message = ''; // フラッシュメッセージを
 
         //  新規で送信ボタンを押したときは $request->department_id には null が入ってます
-  
-    
+      
       switch($action) {
           case "add": 
                 //新規作成の処理
@@ -101,7 +99,6 @@ class DepartmentsController extends Controller
               break;
       }
       
-
       return redirect('/departments')->with('flash_message', $f_message);;
     }
 }

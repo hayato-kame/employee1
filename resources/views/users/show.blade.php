@@ -9,6 +9,8 @@
 
 @section('content')
     {{-- @if (Auth::check()) @else  @endif  と同じ意味の  @auth  @else  @endauth  --}}
+       {{--  @auth @else @endauthは、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
+
     @auth
         @if(isset($user))
             <h3>{{ $user->name }}さんの詳細ページ</h3>

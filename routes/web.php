@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 // use App\Actions\Fortify\PasswordController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\EmployeesController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,17 +27,25 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
+// Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 
-Route::resource('/password', PasswordController::class,['only' => ['show', 'edit', 'update']]);
+// Route::resource('/password', PasswordController::class,['only' => ['show', 'edit', 'update']]);
 
-// 部署一覧ページなど、ログインしていないと、いけない
+// 部署関係のページ 従業員関係のページなど、ログインしていないと、いけない
 Route::group(['middleware' => 'auth'], function() {
+
+    Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
+
+    Route::resource('/password', PasswordController::class,['only' => ['show', 'edit', 'update']]);
+
     Route::get('/departments',  [ DepartmentsController::class, 'index'] )->name('departments.index');
 
-    Route::get('/departments/dep_get',  [ DepartmentsController::class, 'dep_get'] )->name('departments.dep_get');
-    Route::post('/departments/dep_get',  [ DepartmentsController::class, 'dep_post'] )->name('departments.dep_post');
+    Route::get('/departments/dep_get',  [ DepartmentsController::class, 'depGet'] )->name('departments.dep_get');
+    Route::post('/departments/dep_get',  [ DepartmentsController::class, 'depPost'] )->name('departments.dep_post');
 
-    //   Route::resource('/departments', DepartmentsController::class, ['except' => ['show']]);
+    Route::get('/employees', [ EmployeesController::class, 'index' ] )->name('employees.index');
+
+    Route::get('/employees/emp_get',  [ EmployeesController::class, 'empGet'] )->name('employees.emp_get');
+    Route::post('/employees/emp_get',  [ EmployeesController::class, 'empPost'] )->name('employees.emp_post');
 
 });
