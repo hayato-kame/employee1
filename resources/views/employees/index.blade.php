@@ -33,6 +33,7 @@
         <td>{{$employee->name}}</td>
 
          {{-- RESTful じゃないから 'method' => 'put'  じゃない --}}
+         {{-- 修正すること route　かどうか --}}
         <td>{!! Form::open(['route' => ['employees.emp_get', $employee->employee_id], 'method' => 'get'])  !!}
             {!! Form::hidden('action', "edit")  !!}
             {!! Form::hidden('employee_id', $employee->employee_id)  !!}
@@ -55,21 +56,18 @@
 
 @endif
 
-    {{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
+
+{{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
 <button style="margin-right: 15px" type="button" class="btn btn-light" display="inline-block">{!! link_to_route('employees.emp_get', '社員新規作成ページ', ['action' => "add", ] , []) !!}</button>
-
-
-
-    {{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
+{{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
 <button style="margin-right: 15px" type="button" class="btn btn-light" display="inline-block">{!! link_to_route('employees.emp_get', '検索...', ['action' => "add", ] , []) !!}</button>
-
-
 {{-- CSVのボタンは、社員が一人でもいたら、表示することにする --}}
-
-    {{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
+{{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
 <button style="margin-right: 15px" type="button" class="btn btn-light" display="inline-block">{!! link_to_route('employees.emp_get', 'CSVファイルに出力', ['action' => "add", ] , []) !!}</button>
 
-
+<hr>
+{{-- ページネーション  --}}
+{{ $employees->links() }}
 @endsection
 
 @section('footer')

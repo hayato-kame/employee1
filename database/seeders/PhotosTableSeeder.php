@@ -16,7 +16,8 @@ class PhotosTableSeeder extends Seeder
      */
     public function run()
     {
-         for ($i = 0; $i < 3; $i++) {
+        // 注意  親テーブルなので、子テーブルと同じだけのデータが必要です。なので、12 です
+         for ($i = 0; $i < 12; $i++) {  // 子テーブルのデータ数のループ回数にする
              $param = [
                  'photo_data' => null,
                  'mime_type' => null,
