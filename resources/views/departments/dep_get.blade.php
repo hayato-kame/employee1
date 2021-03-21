@@ -58,7 +58,7 @@ $label = "";
                         </div>
 
                         {!! Form::hidden('action', $action) !!}
-                        {{-- 新規の時にはdepartment_id にはnullが入って送られます --}}
+                        {{-- 新規の時にはdepartment_id にはnullが入って送られます ちがうな、オートインクリメントで生成されてる --}}
                         {!! Form::hidden('department_id', $department->department_id) !!}
                     
                         {!! Form::submit('送信', ['class' => 'btn btn-primary' , 'confirm' => 'この内容で送信しますか？']) !!}

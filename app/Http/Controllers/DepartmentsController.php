@@ -33,13 +33,13 @@ class DepartmentsController extends Controller
                 [ 'department' => $department , 'action' => $action]);
                 break;
 
-            case "delete": 
-                // 削除の処理
-                break;
+            // case "delete": 
+            //     // 削除の処理
+            //     break;
 
-            case "cancel": 
-                // キャンセルの処理
-                break;
+            // case "cancel": 
+            //     // キャンセルの処理
+            //     break;
             }
     }
 

@@ -44,10 +44,10 @@
             {!! Form::close() !!}
         </td>
 
-        {{-- RESTful じゃないから 'method' => 'delete'  じゃない 'method' => 'post' です 'method' => 'post' だったら省略可 --}}
-
-
+        
+        
         <td>
+            {{-- RESTful じゃないから 'method' => 'delete'  じゃない 'method' => 'post' です 'method' => 'post' だったら省略可 --}}
             {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!}
             {{-- {!! Form::open(['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!} --}}
             {!! Form::hidden('action', "delete")  !!}

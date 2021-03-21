@@ -34,14 +34,12 @@ class EmployeesController extends Controller
                 [ 'employee' => $employee , 'action' => $action]);
                 break;
 
-            // case "delete": 
-            //     // 削除の処理
-            //     break;
-
-            case "cancel": 
-                // キャンセルの処理 なにもせずにリダイレクトするだけ
-                break;
             }
+    }
+
+    public function empPost(Request $request)
+    {
+
     }
 
 }
