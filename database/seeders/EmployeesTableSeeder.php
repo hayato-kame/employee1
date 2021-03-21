@@ -87,9 +87,16 @@ class EmployeesTableSeeder extends Seeder
             $str_employee_id = sprintf("EMP%04d", ($i + 3) );
             
             // ループの度に、ランダムな数の１か２を取得する
-            $randomInt = random_int(1 , 2);
+            // $randomInt = random_int(1 , 2);
             //  === で厳密な比較にしてください
-            $gender = $randomInt === 1 ? '男' : '女';
+            // $gender = $randomInt === 1 ? '男' : '女';
+            if ($gnames[$i % 3] === 2 ) {
+                $gender = '女';
+            } else {
+                $gender = '男';
+            }
+
+
             // 文字列でいい string型
             $str_zip_number = sprintf("%03d", $i*100 ) . '-' . sprintf("%03d", $i*1000 );
             

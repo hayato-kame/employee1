@@ -16,7 +16,32 @@ class EmployeesController extends Controller
 
     public function empGet(Request $request)
     {
+        
+        $action = $request->action;
+        
+        switch($action) {
+            case "add": 
+                // 新規作成の時にはモデルのインスタンスを作って送ります（中身は空初期状態)
+                $employee = new Employee();
+                 return view('employees.emp_get',
+                 ['employee' => $employee, 'action' => $action]);
+                 break;
 
+            case "edit": 
+                // 編集の処理 
+                $employee = Employee::find($request->employee_id);
+                return view('employees.emp_get', 
+                [ 'employee' => $employee , 'action' => $action]);
+                break;
+
+            // case "delete": 
+            //     // 削除の処理
+            //     break;
+
+            case "cancel": 
+                // キャンセルの処理 なにもせずにリダイレクトするだけ
+                break;
+            }
     }
 
 }

@@ -32,9 +32,11 @@
         <td>{{$employee->employee_id}}</td>
         <td>{{$employee->name}}</td>
 
-         {{-- RESTful じゃないから 'method' => 'put'  じゃない --}}
-         {{-- 修正すること route　かどうか --}}
-        <td>{!! Form::open(['route' => ['employees.emp_get', $employee->employee_id], 'method' => 'get'])  !!}
+         {{-- RESTful じゃないから 'method' => 'put' フォームの表示をするので'method' => 'get' じゃない --}}
+         {{--  Form::open 使うか Form::model　--}}
+        <td>
+            {!! Form::model($employee, ['route' => ['employees.emp_get', $employee->employee_id ], 'method' => 'get']) !!}
+            {{-- {!! Form::open(['route' => ['employees.emp_get', $employee->employee_id], 'method' => 'get'])  !!} --}}
             {!! Form::hidden('action', "edit")  !!}
             {!! Form::hidden('employee_id', $employee->employee_id)  !!}
     
@@ -43,7 +45,11 @@
         </td>
 
         {{-- RESTful じゃないから 'method' => 'delete'  じゃない 'method' => 'post' です 'method' => 'post' だったら省略可 --}}
-        <td>{!! Form::open(['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!}
+
+
+        <td>
+            {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!}
+            {{-- {!! Form::open(['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!} --}}
             {!! Form::hidden('action', "delete")  !!}
             {!! Form::hidden('employee_id', $employee->employee_id)  !!}
             {!! Form::submit('削除', ['class' => 'btn btn-danger' , 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
