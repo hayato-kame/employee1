@@ -54,7 +54,12 @@ $label = "";
                     @endif 
                     {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id ], 'method' => 'post']) !!}
                     
-                        @error('employee_name')
+                        {{-- action と  社員IDを hidden で送信します --}}
+                        {!! Form::hidden('action', $action) !!}
+                        {!! Form::hidden('employee_id', $employee->employee_id) !!}
+                        {!! Form::hidden('photo_id', $employee->photo_id) !!}
+
+                        {{-- @error('employee_name')
                         <p>{{$message}}</p>
                         @enderror
                         <div class="form-group">
@@ -77,21 +82,28 @@ $label = "";
                         <div class="form-group">
                             {!! Form::label('gender', '性別:') !!}
                             {!! Form::text('gender', null, ['class' => 'form-control']) !!}
-                        </div>
-
-                        {{-- 写真の表示 imgタグは ブロック要素で囲む p とか div などで囲む --}} 
-                        {{-- <div>写真:
-                            <img src="PhotoImage?photo=<%=employeeBean.getPhotoId() %>" alt="写真" title="社員の写真" width="300" height="250">
                         </div> --}}
 
-                                {{-- 写真のアップロード --}}
-                        @error('employee_gender')
+                        {{-- 写真の表示 imgタグは ブロック要素で囲む p とか div などで囲む --}} 
+                        {{-- 新規作成のページの時には壊れた画像の表示を出したくないので、
+                        src 属性の値を "" 空文字にすればいい けど、下のようにもできる --}}
+
+                        {{-- <div>写真:
+                            @if ( $action == "edit")
+                                <img src="/photos/show?photo_id={{$employee->photo_id }} >" alt="写真" title="社員の写真" width="300" height="250">
+                            @endif
+                        </div> --}}
+
+                                {{-- 写真のアップロード 'photo_id' カラムしかもってない--}}
+                                {{-- imageカラムはないが 'employees.emp_post'に送ってる --}}
+
+                        @error('photo_id')
                         <p>{{$message}}</p>
                         @enderror
                         <div class="form-group">
-                            {!! Form::label('employee_image', '写真:') !!}
+                            {!! Form::label('image', '写真:') !!}                           
+                            {!! Form::file('image', null, ['class' => 'form-control', 'accept' => ".jpeg, .jpg, .png"]) !!}
                             {!! Form::hidden('photo_id', $employee->photo_id) !!}
-                            {!! Form::file('employee_image', null, ['class' => 'form-control', 'accept' => ".jpeg, .jpg, .png"]) !!}
                         </div>                     
 
 
@@ -99,6 +111,7 @@ $label = "";
                     {!! Form::close() !!}  
                     
                         <div style="margin-top:10px">
+
                     {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id ], 'method' => 'post']) !!}
                         {!! Form::hidden('action', "cancel") !!}
                         {!! Form::submit('キャンセル', ['class' => 'btn btn-primary' ]) !!}

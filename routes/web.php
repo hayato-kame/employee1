@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 // use App\Actions\Fortify\PasswordController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\PhotosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/departments/dep_get',  [ DepartmentsController::class, 'depGet'] )->name('departments.dep_get');
     Route::post('/departments/dep_get',  [ DepartmentsController::class, 'depPost'] )->name('departments.dep_post');
+
+    Route::get('/photos/show', [ PhotosController::class, 'show'])->name('photos.show');
+
 
     Route::get('/employees', [ EmployeesController::class, 'index' ] )->name('employees.index');
 

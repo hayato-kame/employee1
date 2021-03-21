@@ -46,16 +46,16 @@ class DepartmentsController extends Controller
 
     public function depPost(Request $request)
     { 
-        $department = new Department();
         $action = $request->action;
-
+        
         $f_message = ''; // フラッシュメッセージを
-
-        //  新規で送信ボタンを押したときは $request->department_id には null が入ってます
-      
-      switch($action) {
-          case "add": 
+        
+        //  新規で送信ボタンを押したときは $request->department_id には 自動採番 の番号が入ってます
+        
+        switch($action) {
+            case "add": 
                 //新規作成の処理
+                $department = new Department();
                 $this->validate($request, Department::$rules, Department::$messages);
                // 部署IDを作成する
                $last = DB::table('departments')->orderBy('department_id', 'desc')->first();

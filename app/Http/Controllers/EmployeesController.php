@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\Photo;
 
 class EmployeesController extends Controller
 {
+// EmployeesControllerを作る前に、親のDepartmentController と、PhotoController　から作ります
+
     public function index(Request $request)
     {
         // 注意 プライマリーキーのフィールド名は 'employee_id' だから、 'id'と指定するとエラー
@@ -39,6 +42,51 @@ class EmployeesController extends Controller
 
     public function empPost(Request $request)
     {
+
+        $action = $request->action;
+        
+        switch($action) {
+            case "add": 
+            
+                $employee = new Employee();
+
+                $photo = new Photo();
+
+                // dd($request->all());
+
+                // $request->image 
+                // 画像アップロードしてきたものを、ここで、photoテーブルに保存する
+                // base64エンコードに変換
+                $data = base64_encode($request->image);
+                // dd($data);
+               
+                // dd($request->image);
+                
+                // 画像タイプの確認
+                $path = pathinfo($request->image);
+                // dd($pathinfo);
+                // mimeタイプの確認
+                // dd( $path['extension']);
+                
+                $param = [
+                    'photo_data' => $data,
+                    'mime_type' =>  $path['extension'],
+                ];
+               
+                $photo->fill($param)->save();
+
+
+               
+                 break;
+
+            case "edit": 
+                // 編集の処理 
+                $employee = Employee::find($request->employee_id);
+                // $photo = Photo::fing($request->photo_id);
+               
+                break;
+
+            }
 
     }
 
