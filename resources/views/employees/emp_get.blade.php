@@ -54,7 +54,7 @@ $label = "";
                     @endif 
                     {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id ], 'method' => 'post']) !!}
                     
-                        {{-- action と  社員IDを hidden で送信します --}}
+                        {{-- action と  社員ID 写真ID を hidden で送信します --}}
                         {!! Form::hidden('action', $action) !!}
                         {!! Form::hidden('employee_id', $employee->employee_id) !!}
                         {!! Form::hidden('photo_id', $employee->photo_id) !!}
@@ -65,7 +65,7 @@ $label = "";
                         <div class="form-group">
                             {!! Form::label('name', '名前:') !!}
                             {!! Form::text('name', null, ['class' => 'form-control']) !!}
-                        </div>
+                        </div> 
 
 
                         @error('employee_age')
@@ -82,17 +82,18 @@ $label = "";
                         <div class="form-group">
                             {!! Form::label('gender', '性別:') !!}
                             {!! Form::text('gender', null, ['class' => 'form-control']) !!}
-                        </div> --}}
+                        </div>  --}}
 
                         {{-- 写真の表示 imgタグは ブロック要素で囲む p とか div などで囲む --}} 
                         {{-- 新規作成のページの時には壊れた画像の表示を出したくないので、
                         src 属性の値を "" 空文字にすればいい けど、下のようにもできる --}}
 
-                        {{-- <div>写真:
+                        <div>写真:
                             @if ( $action == "edit")
-                                <img src="/photos/show?photo_id={{$employee->photo_id }} >" alt="写真" title="社員の写真" width="300" height="250">
+                           
+                                <img src="photos.show?photo_id={{$employee->photo_id }} >" alt="写真" title="社員の写真" width="300" height="250">
                             @endif
-                        </div> --}}
+                        </div>
 
                                 {{-- 写真のアップロード 'photo_id' カラムしかもってない--}}
                                 {{-- imageカラムはないが 'employees.emp_post'に送ってる --}}

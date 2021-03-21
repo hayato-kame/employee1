@@ -44,6 +44,7 @@ class EmployeesController extends Controller
     {
 
         $action = $request->action;
+        $f_message = ''; // フラッシュメッセージを
         
         switch($action) {
             case "add": 
@@ -74,19 +75,78 @@ class EmployeesController extends Controller
                 ];
                
                 $photo->fill($param)->save();
-
-
+                // ここまで来るってことは、成功してるってこと
+                $f_message = "登録に成功しました";
                
                  break;
 
             case "edit": 
                 // 編集の処理 
                 $employee = Employee::find($request->employee_id);
-                // $photo = Photo::fing($request->photo_id);
+                $photo = Photo::find($request->photo_id);
+
+ 
+                
+
+                
+
+                // dd($request->all());
+
+                // $request->image 
+                // 画像アップロードしてきたものを、ここで、photoテーブルに保存する
+                // base64エンコードに変換
+                $data = base64_encode($request->image);
+                // dd($data);
+               
+                // dd($request->image);
+                
+                // 画像タイプの確認
+                $path = pathinfo($request->image);
+                // dd($pathinfo);
+                // mimeタイプの確認
+                // dd( $path['extension']);
+                
+                $param = [
+                    'photo_data' => $data,
+                    'mime_type' =>  $path['extension'],
+                ];
+               
+                $photo->fill($param)->save();
+                // ここまで来るってことは、成功してるってこと
+                $f_message = "登録に成功しました";
+               
+
+                // dd($request->all());
+
+                // $request->image 
+                // 画像アップロードしてきたものを、ここで、photoテーブルに保存する
+                // base64エンコードに変換
+                $data = base64_encode($request->image);
+                // dd($data);
+               
+                // dd($request->image);
+                
+                // 画像タイプの確認
+                $path = pathinfo($request->image);
+                // dd($pathinfo);
+                // mimeタイプの確認
+                // dd( $path['extension']);
+                
+                $param = [
+                    'photo_data' => $data,
+                    'mime_type' =>  $path['extension'],
+                ];
+               
+                $photo->fill($param)->save();
+                // ここまで来るってことは、成功してるってこと
+                $f_message = "登録に成功しました";
+               
+
                
                 break;
 
             }
+            return redirect('/employees')->with('flash_message', $f_message);
 
     }
 

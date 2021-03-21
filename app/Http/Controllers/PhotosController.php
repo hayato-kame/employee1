@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Photo;
+use App\Models\Employee;
 
 class PhotosController extends Controller
 {
     // データベースからの表示をするコントローラ
 
-    public function show(Request $request)
+    public function show(Request $request, Response $response)
     {
         $action = $request->action;
         
@@ -21,10 +22,24 @@ class PhotosController extends Controller
                  break;
 
             case "edit": 
-                // 編集の処理 photo_id からphotoインスタンスを検索してくる
-                $photo = Employee::find($request->photo_id);
-                return view('employees.emp_get', 
-                [ 'photo' => $photo , 'action' => $action]);
+                // 編集ページが表示の時に、
+                // データベースから取り出して、表示する処理 photo_id が送られてくる
+                $photo = Photo::find($request->photo_id);
+                dd($photo);
+                 // バイナリーデータ取得
+                $photo_data = $photo->photo_data;
+                // mimeタイプ取得
+                $mime_type = $photo->mime_type;
+                
+
+                // デコードする
+                $base64 = base64_decode($photo_data);
+
+                // $response()->
+                $response->setContent($base64);
+                $response->setContent($mime_type);
+                return $response;
+                
                 break;
 
             }

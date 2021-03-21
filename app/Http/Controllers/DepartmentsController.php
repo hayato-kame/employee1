@@ -99,6 +99,6 @@ class DepartmentsController extends Controller
               break;
       }
       
-      return redirect('/departments')->with('flash_message', $f_message);;
+      return redirect('/departments')->with('flash_message', $f_message);
     }
 }
