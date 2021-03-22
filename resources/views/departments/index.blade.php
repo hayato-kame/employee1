@@ -19,7 +19,7 @@
 </p>
 @endif
 
-{{-- all関数を使ってるので @if　が必要  --}}
+<div class="toolbar">{!! link_to_route('dashboard', 'Dashboardへ戻る',[]) !!}</div>
 @if (count($departments) > 0)
 
 <table border="1">

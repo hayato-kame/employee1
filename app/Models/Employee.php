@@ -29,10 +29,19 @@ class Employee extends Model
 
     protected $dates = ['hire_date', 'retire_date' ];
     
-    // protected $guarded = ['employee_id', 'retire_date'];
-// あとで治す上にする
-    protected $guarded = ['employee_id', 'name', 'age', 'gender', 'photo_id', 'zip_number' ,'pref', 'address',
-    'department_id', 'hire_date', 'retire_date'];
+    protected $guarded = ['employee_id', 'photo_id' ,'retire_date'];
+
+
+     // バリデーションのルール
+     public static $rules = [
+        'name' => 'required',
+
+    ];
+
+    // エラーメッセージ
+    public static $messages = [
+        'name.required' => '名前は必ず入れてください',
+    ];
     
     //利用上は部署テーブルが社員テーブルの親ということになる。
     // つまり、部署の下に社員が存在しているという関係です

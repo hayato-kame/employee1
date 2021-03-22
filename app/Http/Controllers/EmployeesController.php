@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Photo;
 use App\Models\Department;
+use DB;
 
 class EmployeesController extends Controller
 {
@@ -96,7 +97,7 @@ class EmployeesController extends Controller
                 // もし、写真をアップロードしてきたら、photosテーブルに登録する
                 // photo_data mime_type は nullableだから if に囲む
                 //POSTされた画像ファイルデータ取得しbase64でエンコードする
-                if ($request->photo_data){ 
+                if (isset($request->photo_data)){ 
                     $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
                     $this->validate($request, Photo::$rules, Photo::$messages );
                     // dd($request->photo_data);
@@ -113,8 +114,21 @@ class EmployeesController extends Controller
                     ];
                     
                     $photo->fill($param)->save();       
+                } else {  // アップロードしてこなくても、photo_id はデータベースに登録しないと、
+                    // 子テーブルが作れないから
+                    $param = [
+                        'photo_data' => null,
+                        'mime_type' => null,
+                    ];
+                     // ddでデバックすると、trueになってる
+                        // dd($photo->save());
+                        $photo->save();
+
                 }
+
                 // つづいて子テーブルemployees
+                // $this->validate($request, Employee::$rules, Employee::$messages);
+                
                 // dd($request->gender);
                 // dd($request->zip_number);
                 // dd($request->pref);
@@ -122,9 +136,27 @@ class EmployeesController extends Controller
                 // dd($request->department_id);
                 // dd($request->hire_date);
                 // dd($request->retire_date);
+
+                // 社員IDを作る
+                $last = DB::table('employees')->orderBy('employee_id', 'desc')->first();
+                $resultStrId = "EMP0001";  // 初期値
+                if (isset($last)) {
+                    $strId = $last->employee_id;  //文字列を取得
+                     // 数字の部分を取得して数値に変換して １を足す
+                    $num = intval(substr($strId, -4)) + 1 ;
+                    // 文字列のフォーマット 部署IDができた
+                    $resultStrId = sprintf("EMP%04d", $num);
+                } 
+                // もし $last が null だったら、初期値をセットする
+                // ここで、インスタンスのプロパティに作成した従業員IDをセット
+               $employee->employee_id = $resultStrId;
+
                 $employee->name = $request->name;
                 $employee->age = $request->age;
                 $employee->gender = $request->gender;
+                // ここがポイント
+                $employee->photo_id = $photo->photo_id;
+
                 $employee->zip_number = $request->zip_number;
                 $employee->pref = $request->pref;
                 $employee->address1 = $request->address1;

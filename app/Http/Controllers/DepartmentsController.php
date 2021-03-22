@@ -62,8 +62,8 @@ class DepartmentsController extends Controller
                $resultStrId = "D01";  // 初期値
                if (isset($last)) {
                    $strId = $last->department_id;  //文字列を取得
-                    // 最後の一番目を取得して数値に変換して １を足す
-                   $num = intval(substr($strId, -1)) + 1 ;  // 最後の一番目を取得して数値に変換
+                    // 数字の部分を取得して数値に変換して １を足す
+                   $num = intval(substr($strId, -2, )) + 1 ;
                    // 文字列のフォーマット 部署IDができた
                    $resultStrId = sprintf("D%02d", $num);
                } 
