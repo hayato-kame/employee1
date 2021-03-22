@@ -87,7 +87,10 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         @enderror
                         <div class="form-group">
                             {!! Form::label('gender', '性別:') !!}
-                            {!! Form::text('gender', null, ['class' => 'form-control']) !!}
+                            {!! Form::radio('gender', '男', false, ) !!} 男性
+                            {!! Form::radio('gender', '女', false, ) !!} 女性
+                            {{-- {!! Form::label('gender', '性別:') !!}
+                            {!! Form::text('gender', null, ['class' => 'form-control']) !!} --}}
                         </div> 
 
                         {{-- 写真の表示 imgタグは ブロック要素で囲む p とか div などで囲む --}} 
@@ -95,10 +98,10 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         src 属性の値を "" 空文字にすればいい けど、下のようにもできる --}}
 
    
-                        <div>写真:
+                        <div>
                             @if ( $action == "edit" )
                                 {{-- @if ($photo->photo_data != null && $photo->mime_type != null) --}}
-                            
+                                写真:
                                 <img src="data:image/{{$employee->photo->mime_type}};base64,{{$image}}" alt="写真" title="社員の写真" width="300" height="250">
                                
                                 {{-- @endif --}}
@@ -121,38 +124,74 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         @error('zip_number')
                         <p>{{$message}}</p>
                         @enderror
+                        @error('pref')
+                        <p>{{$message}}</p>
+                        @enderror
+                        @error('address1')
+                        <p>{{$message}}</p>
+                        @enderror
+                        @error('address2')
+                        <p>{{$message}}</p>
+                        @enderror
+                        @error('address3')
+                        <p>{{$message}}</p>
+                        @enderror
                         <div class="form-group">
+                             {{-- 直接blade.phpファイルに書くか、public/jsフォルダでも切ってインクルードする。
+                            <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script> --}}
                             {!! Form::label('zip_number', '郵便番号:') !!}
-                            {!! Form::text('zip_number', null, ['class' => 'form-control']) !!}
+                             {!!  Form::text('zip_number', null, [ 'onkeyup'=>"AjaxZip3.zip2addr(this,'','pref','address1','address2','address3') "] );  !!}<br>
+                            {{-- なぜか都道府県が1個後ろにズレる…。とりあえず空要素を先頭に入れてみた。プルダウンの場合は、都道府県コードで返ってきている？ --}}
+                                                        
+                            {!! Form::label('pref', '都道府県:') !!}
+                             {!! Form::select('pref', ['', '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'], ['class' => 'form-control']); !!}<br>
+                            
+                             {!! Form::label('address1', '住所（市区町村郡）:') !!}
+                             {!!  Form::text('address1', null, ['class' => 'form-control']); !!}<br>
+                            
+                             {!! Form::label('address2', '住所（町名番地）:') !!} 
+                            {!!  Form::text('address2', null, ['class' => 'form-control']); !!}<br>
+                            
+                            {!! Form::label('address3', '住所（建物名）:') !!} 
+                            {!!  Form::text('address3', null, ['class' => 'form-control']); !!}<br>
+
+                            {{-- {!! Form::label('zip_number', '郵便番号:') !!}
+                            {!! Form::text('zip_number', null, ['class' => 'form-control']) !!} --}}
                         </div> 
 
 
-                        @error('pref')
+                        {{-- @error('pref')
                         <p>{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('pref', '都道府県:') !!}
                             {!! Form::text('pref', null, ['class' => 'form-control']) !!}
-                        </div> 
+                        </div>  --}}
+                     
 
-
-                        
-
-                        @error('address')
+                        {{-- @error('address')
                         <p>{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('address', '住所:') !!}
                             {!! Form::text('address', null, ['class' => 'form-control']) !!}
-                        </div> 
+                        </div>  --}}
 
                         @error('department_id')
                         <p>{{$message}}</p>
                         @enderror
+                        @if($action === "edit")
                         <div class="form-group">
                             {!! Form::label('department_id', '所属:') !!}
                             {!! Form::text('department_id', $employee->department->department_name , ['class' => 'form-control']) !!}
                         </div> 
+                        @else
+                        <div class="form-group">
+                            {!! Form::label('department_id', '所属:') !!}
+                            {!! Form::text('department_id', null , ['class' => 'form-control']) !!}
+                        </div> 
+
+                        @endif
 
                         @error('hire_date')
                         <p>{{$message}}</p>
