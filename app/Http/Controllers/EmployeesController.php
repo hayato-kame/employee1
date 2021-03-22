@@ -38,9 +38,9 @@ class EmployeesController extends Controller
                 }
                 // 注意ややこしいことに、配列変数をデバックするときには[]を入れてはいけません
                 // dd($dep_name);  
-              
                 
                 $employee = new Employee();
+                
                  return view('employees.emp_get',
                  [
                     'photo' => $photo ,
@@ -53,7 +53,17 @@ class EmployeesController extends Controller
             case "edit": 
                 // getでアクセスされたときに、写真表示しないといけない
                 // 編集の処理 
-                $departments = Department::all(); // セレクトボックスに一覧が必要
+                $departments = Department::all(); // セレクトボックスに一覧が必要$departmentsはコレクション
+                // dd($departments->all());
+                $depArray = $departments->all();
+                // dd($depArray[0]->department_name);
+                $dep_name = []; //配列の初期化 キーが　D01 値が 総務部 の連想配列にしたい
+                foreach($depArray as $dep){
+                    // [] にキーを指定して、連想配列を作成できます！！
+                    $dep_name[$dep->department_id] = $dep->department_name;  // 注意[]を入れないと、ただの上書きになってしまいます
+                }
+                // 注意ややこしいことに、配列変数をデバックするときには[]を入れてはいけません
+                // dd($dep_name);  
                 $employee = Employee::find($request->employee_id);
                 // dd($employee->photo->mime_type);
                 // dd($employee->photo->photo_data);
@@ -63,7 +73,7 @@ class EmployeesController extends Controller
                 return view('employees.emp_get', 
                 [ 
                     'image' => $employee->photo->photo_data,
-                    'departments' => $departments,
+                    'dep_name' => $dep_name,
                     'employee' => $employee ,
                     'action' => $action,
                     'photo_id' => $employee->photo_id]);
@@ -84,6 +94,7 @@ class EmployeesController extends Controller
                 $employee = new Employee();
 
                 $photo = new Photo();
+                // バリデーション
 
                 // dd($request->all());
 
@@ -123,15 +134,15 @@ class EmployeesController extends Controller
 
                 // $request->image 
                 // 画像アップロードしてきたものを、ここで、photoテーブルに保存する
-                // base64エンコードに変換
+                // base64エンコードに変換 バイナリーデータになってる
 
-                $data = base64_encode($request->image);
+                // $data = base64_encode($request->image);
                 // dd($data);
 
                 //POSTされた画像ファイルデータ取得しbase64でエンコードする
                 if ($request->image){ // 画像編集しない場合もあるから
                     $image = base64_encode(file_get_contents($request->image->getRealPath()));
-                                   
+                                   $this->validate($request, Photo::$rules, Photo::$messages );
                                     // dd($request->image);
                                     
                                     // 画像タイプの確認
