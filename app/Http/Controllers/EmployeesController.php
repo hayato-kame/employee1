@@ -27,13 +27,14 @@ class EmployeesController extends Controller
             case "add": 
                 // 新規作成の時にはモデルのインスタンスを作って送ります（中身は空初期状態)
                 $photo = new Photo();  // 親テーブルからさきに作るから
-                $departments = Department::all(); // セレクトボックスに一覧が必要
+                $departments = Department::all(); // セレクトボックスに一覧が必要$departmentsはコレクション
                 // dd($departments->all());
                 $depArray = $departments->all();
                 // dd($depArray[0]->department_name);
-                $dep_name = []; //配列の初期化
+                $dep_name = []; //配列の初期化 キーが　D01 値が 総務部 の連想配列にしたい
                 foreach($depArray as $dep){
-                    $dep_name[] = $dep->department_name;  // 注意[]を入れないと、ただの上書きになってしまいます
+                    // [] にキーを指定して、連想配列を作成できます！！
+                    $dep_name[$dep->department_id] = $dep->department_name;  // 注意[]を入れないと、ただの上書きになってしまいます
                 }
                 // 注意ややこしいことに、配列変数をデバックするときには[]を入れてはいけません
                 // dd($dep_name);  
@@ -43,7 +44,7 @@ class EmployeesController extends Controller
                  return view('employees.emp_get',
                  [
                     'photo' => $photo ,
-                    'dep_name' => $dep_name,
+                    'dep_name' => $dep_name, // 連想配列を送ります キーがD01 値が総務部などの
                     'employee' => $employee, 
                     'action' => $action
                  ]);

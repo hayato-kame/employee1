@@ -85,20 +85,22 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         @error('employee_gender')
                         <p>{{$message}}</p>
                         @enderror
-                        <div class="form-group">
-                            {!! Form::label('gender', '性別:') !!}
-                            {!! Form::radio('gender', '男', false, ) !!} 男性
-                            {!! Form::radio('gender', '女', false, ) !!} 女性
-                            {{-- {!! Form::label('gender', '性別:') !!}
-                            {!! Form::text('gender', null, ['class' => 'form-control']) !!} --}}
-                        </div> 
+                        
+                        <div class="form-check form-check-inline">
+                            {{ Form::radio('gender', '男', false, ['id' => 'radio-one', 'class' => 'form-check-input']) }}
+                            {{ Form::label('radio-one', '男性', ['class' => 'form-check-label']) }}
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {{ Form::radio('gender', '女', false, ['id' => 'radio-two', 'class' => 'form-check-input']) }}
+                            {{ Form::label('radio-two', '女性', ['class' => 'form-check-label']) }}
+                        </div>
 
                         {{-- 写真の表示 imgタグは ブロック要素で囲む p とか div などで囲む --}} 
                         {{-- 新規作成のページの時には壊れた画像の表示を出したくないので、
                         src 属性の値を "" 空文字にすればいい けど、下のようにもできる --}}
 
    
-                        <div>
+                        <div style="margin-top:15px" >
                             @if ( $action == "edit" )
                                 {{-- @if ($photo->photo_data != null && $photo->mime_type != null) --}}
                                 写真:
@@ -184,7 +186,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         @enderror
 
                        
-                      
+                      {{--  $dep_name は連想配列です D01 から総務部 D02 営業部 D03 経理部　そのほか --}}
 
                         @if($action === "edit")
                         {{-- 編集だったら --}}
@@ -200,7 +202,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         {{-- 新規だったら --}}
                         <div class="form-group">
                             {!! Form::label('department_id','所属:') !!}
-                            {!! Form::select('department_id', $dep_name ,  []); !!}<br>
+                            {!! Form::select('department_id', $dep_name ,  ['class' => 'form-control']); !!}<br>
 
                             {{-- {!! Form::label('department_id', '所属:') !!}
                             {!! Form::text('department_id', null , ['class' => 'form-control']) !!} --}}
