@@ -177,18 +177,33 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                             {!! Form::text('address', null, ['class' => 'form-control']) !!}
                         </div>  --}}
 
+                        
+
                         @error('department_id')
                         <p>{{$message}}</p>
                         @enderror
+
+                       
+                      
+
                         @if($action === "edit")
+                        {{-- 編集だったら --}}
                         <div class="form-group">
-                            {!! Form::label('department_id', '所属:') !!}
-                            {!! Form::text('department_id', $employee->department->department_name , ['class' => 'form-control']) !!}
+
+                            {!! Form::label('department_id','所属:') !!}
+                            {!! Form::select('department_id',   $dep_name ,  ['class' => 'form-control']); !!}
+
+                            {{-- {!! Form::label('department_id', '所属:') !!}
+                            {!! Form::text('department_id', $employee->department->department_name , ['class' => 'form-control']) !!} --}}
                         </div> 
                         @else
+                        {{-- 新規だったら --}}
                         <div class="form-group">
-                            {!! Form::label('department_id', '所属:') !!}
-                            {!! Form::text('department_id', null , ['class' => 'form-control']) !!}
+                            {!! Form::label('department_id','所属:') !!}
+                            {!! Form::select('department_id', $dep_name ,  []); !!}<br>
+
+                            {{-- {!! Form::label('department_id', '所属:') !!}
+                            {!! Form::text('department_id', null , ['class' => 'form-control']) !!} --}}
                         </div> 
 
                         @endif

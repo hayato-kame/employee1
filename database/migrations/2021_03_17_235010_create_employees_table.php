@@ -33,7 +33,9 @@ class CreateEmployeesTable extends Migration
             // photos（主テーブル）の  incrementsメソッドは、UNSIGNED INTEGER主キーとして自動インクリメントの同等の列を作成します。     
             $table->string('zip_number' ,20);
             $table->string('pref', 20);
-            $table->string('address', 100);
+            $table->string('address1', 100);
+            $table->string('address2', 100);
+            $table->string('address3', 100);
 
             // 部署テーブルの従テーブルだから ひとつの部署にに属するから単数形で書く データ型きちんと合わせる
             $table->string('department_id');  //　外部キーのフィールドdepartments文字列型

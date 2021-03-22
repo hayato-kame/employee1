@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Photo;
+use App\Models\Department;
 
 class EmployeesController extends Controller
 {
@@ -26,15 +27,32 @@ class EmployeesController extends Controller
             case "add": 
                 // 新規作成の時にはモデルのインスタンスを作って送ります（中身は空初期状態)
                 $photo = new Photo();  // 親テーブルからさきに作るから
+                $departments = Department::all(); // セレクトボックスに一覧が必要
+                // dd($departments->all());
+                $depArray = $departments->all();
+                // dd($depArray[0]->department_name);
+                $dep_name = []; //配列の初期化
+                foreach($depArray as $dep){
+                    $dep_name[] = $dep->department_name;  // 注意[]を入れないと、ただの上書きになってしまいます
+                }
+                // 注意ややこしいことに、配列変数をデバックするときには[]を入れてはいけません
+                // dd($dep_name);  
+              
+                
                 $employee = new Employee();
                  return view('employees.emp_get',
-                 ['photo' => $photo ,'employee' => $employee, 'action' => $action]);
+                 [
+                    'photo' => $photo ,
+                    'dep_name' => $dep_name,
+                    'employee' => $employee, 
+                    'action' => $action
+                 ]);
                  break;
 
             case "edit": 
                 // getでアクセスされたときに、写真表示しないといけない
                 // 編集の処理 
-                
+                $departments = Department::all(); // セレクトボックスに一覧が必要
                 $employee = Employee::find($request->employee_id);
                 // dd($employee->photo->mime_type);
                 // dd($employee->photo->photo_data);
@@ -42,7 +60,12 @@ class EmployeesController extends Controller
                 // dd($photo); 
 
                 return view('employees.emp_get', 
-                [ 'image' => $employee->photo->photo_data, 'employee' => $employee , 'action' => $action, 'photo_id' => $employee->photo_id]);
+                [ 
+                    'image' => $employee->photo->photo_data,
+                    'departments' => $departments,
+                    'employee' => $employee ,
+                    'action' => $action,
+                    'photo_id' => $employee->photo_id]);
                 break;
 
             }
