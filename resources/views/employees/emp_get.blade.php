@@ -110,16 +110,15 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                             @endif
                         </div>
 
-                                {{-- 写真のアップロード 'photo_id' カラムしかもってない--}}
-                                {{-- imageカラムはないが 'employees.emp_post'に送ってる --}}
-
+                                {{-- 写真のアップロードemployeesは 'photo_id' カラムしかもってない--}}
+                             
                         @error('photo_id')
                         <p>{{$message}}</p>
                         @enderror
                         {{-- フォームタグの'files' => trueが必要である --}}
-                        <div class="form-group">
-                            {!! Form::label('image', '写真:') !!}                           
-                            {!! Form::file('image', null, ['class' => 'form-control', 'accept' => ".jpeg, .jpg, .png"]) !!}
+                        <div class="form-group">                          
+                            {!! Form::label('photo_data', '写真:') !!}                           
+                            {!! Form::file('photo_data', null, ['class' => 'form-control', 'accept' => ".jpeg, .jpg, .png"]) !!}
                             {!! Form::hidden('photo_id', $employee->photo_id) !!}
                         </div> 
                         

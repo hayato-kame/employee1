@@ -19,6 +19,8 @@
 </p>
 @endif
 
+<div class="toolbar">{!! link_to_route('dashboard', 'Dashboardへ戻る',[]) !!}</div>
+
 @if (count($employees) > 0)
 
 <table border="1">

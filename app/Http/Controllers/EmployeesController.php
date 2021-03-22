@@ -91,35 +91,50 @@ class EmployeesController extends Controller
         switch($action) {
             case "add": 
             
-                $employee = new Employee();
-
-                $photo = new Photo();
-                // バリデーション
-
-                // dd($request->all());
-
-                // $request->image 
-                // 画像アップロードしてきたものを、ここで、photoテーブルに保存する
-                // base64エンコードに変換
-                $data = base64_encode($request->image);
-                // dd($data);
-               
-                // dd($request->image);
-                
-                // 画像タイプの確認
-                $path = pathinfo($request->image);
-                // dd($pathinfo);
-                // mimeタイプの確認
-                // dd( $path['extension']);
-                
-                // バイナリーデータと、mime  
-                $param = [
-                    'photo_data' => $data,
-                    'mime_type' =>  $path['extension'],
-                ];
-               
-                $photo->fill($param)->save();
-                // ここまで来るってことは、成功してるってこと
+                $photo = new Photo();// 親テーブルを先に
+                $employee = new Employee(); // 従テーブル（子テーブル）
+                // もし、写真をアップロードしてきたら、photosテーブルに登録する
+                // photo_data mime_type は nullableだから if に囲む
+                //POSTされた画像ファイルデータ取得しbase64でエンコードする
+                if ($request->photo_data){ 
+                    $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
+                    $this->validate($request, Photo::$rules, Photo::$messages );
+                    // dd($request->photo_data);
+                    
+                    // 画像タイプの確認
+                    $path = pathinfo($request->photo_data);
+                    // dd($pathinfo);
+                    // mimeタイプの確認
+                    // dd( $path['extension']);
+                    
+                    $param = [
+                        'photo_data' =>$photo_data,
+                        'mime_type' =>  $path['extension'],
+                    ];
+                    
+                    $photo->fill($param)->save();       
+                }
+                // つづいて子テーブルemployees
+                // dd($request->gender);
+                // dd($request->zip_number);
+                // dd($request->pref);
+                // dd($request->address1);
+                // dd($request->department_id);
+                // dd($request->hire_date);
+                // dd($request->retire_date);
+                $employee->name = $request->name;
+                $employee->age = $request->age;
+                $employee->gender = $request->gender;
+                $employee->zip_number = $request->zip_number;
+                $employee->pref = $request->pref;
+                $employee->address1 = $request->address1;
+                $employee->address2 = $request->address2;
+                $employee->address3 = $request->address3;
+                $employee->department_id = $request->department_id;
+                $employee->hire_date = $request->hire_date;
+                $employee->retire_date = $request->retire_date;
+                $employee->save();
+           
                 $f_message = "登録に成功しました";
                
                  break;
@@ -129,7 +144,7 @@ class EmployeesController extends Controller
                 // 編集の処理  上書き
                 $employee = Employee::find($request->employee_id);
                 $photo = Photo::find($request->photo_id);
-                //先に親テーブルに保存
+                //先に親テーブルphotosに保存
                 // dd($request->all());
 
                 // $request->image 
@@ -140,13 +155,13 @@ class EmployeesController extends Controller
                 // dd($data);
 
                 //POSTされた画像ファイルデータ取得しbase64でエンコードする
-                if ($request->image){ // 画像編集しない場合もあるから
-                    $image = base64_encode(file_get_contents($request->image->getRealPath()));
+                if ($request->photo_data){ // 画像変更編集しない場合もあるから
+                    $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
                                    $this->validate($request, Photo::$rules, Photo::$messages );
                                     // dd($request->image);
                                     
                                     // 画像タイプの確認
-                                    $path = pathinfo($request->image);
+                                    $path = pathinfo($request->photo_data);
                                     // dd($pathinfo);
                                     // mimeタイプの確認
                                     // dd( $path['extension']);
@@ -154,29 +169,20 @@ class EmployeesController extends Controller
                                     $param = [
                                         // 'photo_data' => $data,
                                         // 試してみる
-                                        'photo_data' =>$image,
+                                        'photo_data' =>$photo_data,
                                         'mime_type' =>  $path['extension'],
                                     ];
                                    
                                     $photo->fill($param)->save();
                                     // ここまで来るってことは、成功してるってこと
                                     // 続いて子テーブル
-                                    $employee->photo_id = $request->photo_id;
-                                    $employee->save();
+                                    // $employee->photo_id = $request->photo_id;
+                                    // $employee->save();
                 }
 
-
-
-
                 $f_message = "登録に成功しました";
-               
-
-               
-               
-
-               
+                             
                 break;
-
             }
             return redirect('/employees')->with('flash_message', $f_message);
 
