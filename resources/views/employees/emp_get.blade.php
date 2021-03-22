@@ -65,7 +65,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         {!! Form::hidden('employee_id', $employee->employee_id) !!}
                         {!! Form::hidden('photo_id', $employee->photo_id) !!}
 
-                        {{-- @error('employee_name')
+                        @error('employee_name')
                         <p>{{$message}}</p>
                         @enderror
                         <div class="form-group">
@@ -88,20 +88,19 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         <div class="form-group">
                             {!! Form::label('gender', '性別:') !!}
                             {!! Form::text('gender', null, ['class' => 'form-control']) !!}
-                        </div>  --}}
+                        </div> 
 
                         {{-- 写真の表示 imgタグは ブロック要素で囲む p とか div などで囲む --}} 
                         {{-- 新規作成のページの時には壊れた画像の表示を出したくないので、
                         src 属性の値を "" 空文字にすればいい けど、下のようにもできる --}}
 
-                          {{-- 編集のページでも、シードデータでは、photoがnull --}}
+   
                         <div>写真:
                             @if ( $action == "edit" )
                                 {{-- @if ($photo->photo_data != null && $photo->mime_type != null) --}}
-                            {{-- <img src="data:image/jpg;base64,MTk3MDAxMDJfMDU0NzUzLmpwZw==" alt="写真" title="社員の写真" width="300" height="250"> --}}
-                                {{-- <img src="/photos/show?photo_id={{$employee->photo_id }}?action=edit>" alt="写真" title="社員の写真" width="300" height="250"> --}}
+                            
                                 <img src="data:image/{{$employee->photo->mime_type}};base64,{{$image}}" alt="写真" title="社員の写真" width="300" height="250">
-                                {{-- <img src="data:image/png;base64,< ? = $image ?>"> --}}
+                               
                                 {{-- @endif --}}
                             @endif
                         </div>
@@ -112,12 +111,64 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         @error('photo_id')
                         <p>{{$message}}</p>
                         @enderror
+                        {{-- フォームタグの'files' => trueが必要である --}}
                         <div class="form-group">
                             {!! Form::label('image', '写真:') !!}                           
                             {!! Form::file('image', null, ['class' => 'form-control', 'accept' => ".jpeg, .jpg, .png"]) !!}
                             {!! Form::hidden('photo_id', $employee->photo_id) !!}
-                        </div>                     
+                        </div> 
+                        
+                        @error('zip_number')
+                        <p>{{$message}}</p>
+                        @enderror
+                        <div class="form-group">
+                            {!! Form::label('zip_number', '郵便番号:') !!}
+                            {!! Form::text('zip_number', null, ['class' => 'form-control']) !!}
+                        </div> 
 
+
+                        @error('pref')
+                        <p>{{$message}}</p>
+                        @enderror
+                        <div class="form-group">
+                            {!! Form::label('pref', '都道府県:') !!}
+                            {!! Form::text('pref', null, ['class' => 'form-control']) !!}
+                        </div> 
+
+
+                        
+
+                        @error('address')
+                        <p>{{$message}}</p>
+                        @enderror
+                        <div class="form-group">
+                            {!! Form::label('address', '住所:') !!}
+                            {!! Form::text('address', null, ['class' => 'form-control']) !!}
+                        </div> 
+
+                        @error('department_id')
+                        <p>{{$message}}</p>
+                        @enderror
+                        <div class="form-group">
+                            {!! Form::label('department_id', '所属:') !!}
+                            {!! Form::text('department_id', $employee->department->department_name , ['class' => 'form-control']) !!}
+                        </div> 
+
+                        @error('hire_date')
+                        <p>{{$message}}</p>
+                        @enderror
+                        <div class="form-group">
+                            {!! Form::label('hire_date', '入社日:') !!}
+                            {!! Form::date('hire_date', $employee->hire_date, ['class' => 'form-control']) !!}
+                        </div> 
+
+                        @error('retire_date')
+                        <p>{{$message}}</p>
+                        @enderror
+                        <div class="form-group">
+                            {!! Form::label('retire_date', '退社日:') !!}
+                            {!! Form::date('retire_date', $employee->retire_date, ['class' => 'form-control']) !!}
+                        </div> 
 
                         {!! Form::submit('送信', ['class' => 'btn btn-primary' , 'confirm' => 'この内容で送信しますか？']) !!}
                     {!! Form::close() !!}  

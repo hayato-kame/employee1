@@ -105,28 +105,30 @@ class EmployeesController extends Controller
                 // dd($data);
 
                 //POSTされた画像ファイルデータ取得しbase64でエンコードする
-$image = base64_encode(file_get_contents($request->image->getRealPath()));
-               
-                // dd($request->image);
-                
-                // 画像タイプの確認
-                $path = pathinfo($request->image);
-                // dd($pathinfo);
-                // mimeタイプの確認
-                // dd( $path['extension']);
-                
-                $param = [
-                    // 'photo_data' => $data,
-                    // 試してみる
-                    'photo_data' =>$image,
-                    'mime_type' =>  $path['extension'],
-                ];
-               
-                $photo->fill($param)->save();
-                // ここまで来るってことは、成功してるってこと
-                // 続いて子テーブル
-                $employee->photo_id = $request->photo_id;
-                $employee->save();
+                if ($request->image){ // 画像編集しない場合もあるから
+                    $image = base64_encode(file_get_contents($request->image->getRealPath()));
+                                   
+                                    // dd($request->image);
+                                    
+                                    // 画像タイプの確認
+                                    $path = pathinfo($request->image);
+                                    // dd($pathinfo);
+                                    // mimeタイプの確認
+                                    // dd( $path['extension']);
+                                    
+                                    $param = [
+                                        // 'photo_data' => $data,
+                                        // 試してみる
+                                        'photo_data' =>$image,
+                                        'mime_type' =>  $path['extension'],
+                                    ];
+                                   
+                                    $photo->fill($param)->save();
+                                    // ここまで来るってことは、成功してるってこと
+                                    // 続いて子テーブル
+                                    $employee->photo_id = $request->photo_id;
+                                    $employee->save();
+                }
 
 
 

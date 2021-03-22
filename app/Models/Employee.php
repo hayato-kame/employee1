@@ -26,6 +26,8 @@ class Employee extends Model
     
     protected $fillable = ['employee_id', 'name', 'age', 'gender', 'photo_id', 'zip_number' ,'pref', 'address',
     'department_id', 'hire_date', 'retire_date'];
+
+    protected $dates = ['hire_date', 'retire_date' ];
     
     // protected $guarded = ['employee_id', 'retire_date'];
 // あとで治す上にする

@@ -26,7 +26,7 @@ class EmployeesTableSeeder extends Seeder
             'age' => 35,
             'gender' => '男',
             'photo_id' => 1,
-            'zip_number' => 100-1000,
+            'zip_number' => '100-1000',
             'pref' => '東京都',
             'address' => '千代田区',
             'department_id' => 'D01',
@@ -42,7 +42,7 @@ class EmployeesTableSeeder extends Seeder
             'age' => 27,
             'gender' => '女',
             'photo_id' => 2,
-            'zip_number' => 200-2000,
+            'zip_number' => '200-2000',
             'pref' => '埼玉県',
             'address' => 'さいたま市',
             'department_id' => 'D03',
@@ -59,7 +59,7 @@ class EmployeesTableSeeder extends Seeder
             'age' => 41,
             'gender' => '男',
             'photo_id' => 3,
-            'zip_number' => 300-3000,
+            'zip_number' => '300-3000',
             'pref' => '神奈川県',
             'address' => '川崎市',
             'department_id' => 'D03',
@@ -104,6 +104,9 @@ class EmployeesTableSeeder extends Seeder
             // $str_zip_number = sprintf("%03d-%04d", $i*100 , $i*1000 );
 
             $randomAddress = $this->getRandomHiragana(5);
+
+            $date = new DateTime();
+            $date = date_format($date, 'Y-m-d');
             
             DB::table('employees')->insert([
                 'employee_id' => $str_employee_id,
@@ -117,9 +120,10 @@ class EmployeesTableSeeder extends Seeder
                 'department_id' => "{$departmentIdArray[$i % 3]}",
                 // 'email' => 'aaa' . $i . '@example.com',
                 // 'password' => Hash::make('password'. $i),
-               
-                'hire_date' => new DateTime(),
-                'retire_date' => new DateTime(),
+              
+
+                'hire_date' => $date,
+                'retire_date' => $date,
                 ]);
             }
             
