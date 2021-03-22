@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreatePhotosTable extends Migration
 {
@@ -21,11 +22,17 @@ class CreatePhotosTable extends Migration
             // このbigIncrementsメソッドは、自動インクリメントUNSIGNED BIGINT（主キー）に相当する列を作成します。
             // だから、従テーブルのemployeesでは、unsignedBigIntegerメソッドを使ってください
             
-            $table->binary('photo_data')->nullable();
+            // 変更あり！！ここでは、Blob型は書かないでください
+            // $table->binary('photo_data')->nullable();
+
             $table->string('mime_type')->nullable();
-            $table->timestamps();
-            
+            $table->timestamps();        
         });
+
+        
+        // 推奨されないわけです。大きすぎて無理  登録するときには、小さい画像にしてください
+        // ここで　書いてくださいMEDIUMBLOB　じゃないと、保存できないからです
+        DB::statement("ALTER TABLE photos ADD photo_data MEDIUMBLOB");
     }
 
     /**

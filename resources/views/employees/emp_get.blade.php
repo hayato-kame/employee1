@@ -52,7 +52,13 @@ $label = "";
                     @if ( $action == "edit")
                     <h3>社員ID: {{ $employee->employee_id }} </h3>
                     @endif 
-                    {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id ], 'method' => 'post']) !!}
+
+                    {{-- フォームはファイルのアップロードをサポートしていますか？  
+                    
+インスタンス$request['a_file']ではなく文字列を提供しているようですUploadedFile。フォームはファイルのアップロードをサポートしていますか？
+
+laravelcollectiveフォームファサードを使用してこれを追加する方法'files' => true --}}
+                    {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id ], 'method' => 'post', 'files' => true]) !!}
                     
                         {{-- action と  社員ID 写真ID を hidden で送信します --}}
                         {!! Form::hidden('action', $action) !!}
@@ -88,10 +94,15 @@ $label = "";
                         {{-- 新規作成のページの時には壊れた画像の表示を出したくないので、
                         src 属性の値を "" 空文字にすればいい けど、下のようにもできる --}}
 
+                          {{-- 編集のページでも、シードデータでは、photoがnull --}}
                         <div>写真:
-                            @if ( $action == "edit")
-                           
-                                <img src="photos.show?photo_id={{$employee->photo_id }} >" alt="写真" title="社員の写真" width="300" height="250">
+                            @if ( $action == "edit" )
+                                {{-- @if ($photo->photo_data != null && $photo->mime_type != null) --}}
+                            {{-- <img src="data:image/jpg;base64,MTk3MDAxMDJfMDU0NzUzLmpwZw==" alt="写真" title="社員の写真" width="300" height="250"> --}}
+                                {{-- <img src="/photos/show?photo_id={{$employee->photo_id }}?action=edit>" alt="写真" title="社員の写真" width="300" height="250"> --}}
+                                <img src="data:image/{{$employee->photo->mime_type}};base64,{{$image}}" alt="写真" title="社員の写真" width="300" height="250">
+                                {{-- <img src="data:image/png;base64,< ? = $image ?>"> --}}
+                                {{-- @endif --}}
                             @endif
                         </div>
 

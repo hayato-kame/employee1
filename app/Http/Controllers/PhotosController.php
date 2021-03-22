@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Photo;
 use App\Models\Employee;
+use ParagonIE\ConstantTime\Binary;
+use Symfony\Component\String\ByteString;
+use BynaryWriter;
 
 class PhotosController extends Controller
 {
-    // データベースからの表示をするコントローラ
+    // データベースからの表示をするコントローラ これ使ってない
 
     public function show(Request $request, Response $response)
     {
-        $action = $request->action;
+        $action = $request->action; //クエリーパラメータから
         
         switch($action) {
             case "add": 
@@ -33,12 +36,18 @@ class PhotosController extends Controller
                 
 
                 // デコードする
-                $base64 = base64_decode($photo_data);
+                // $base64 = base64_decode($photo_data);
+                
+                
 
-                // $response()->
-                $response->setContent($base64);
-                $response->setContent($mime_type);
-                return $response;
+                if(photo_data != null) { // 新規の時はスルーする
+                   
+        
+                }
+                // $response->header
+                // $response->setContent($photo_data);
+                // $response->setContent($mime_type);
+                // return $response;
                 
                 break;
 
