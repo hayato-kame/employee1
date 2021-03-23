@@ -94,9 +94,9 @@ class EmployeesController extends Controller
             
                 $photo = new Photo();// 親テーブルを先に
                 $employee = new Employee(); // 従テーブル（子テーブル）
-                // もし、写真をアップロードしてきたら、photosテーブルに登録する
-                // photo_data mime_type は nullableだから if に囲む
-                //POSTされた画像ファイルデータ取得しbase64でエンコードする
+                // もし、写真をアップロードしてきたら、先に主テーブルのphotosテーブルに登録する
+                // photo_data mime_type は nullableだから
+                //もし、POSTされた画像ファイルデータがあれば取得しbase64でエンコードする
                 if (isset($request->photo_data)){ 
                     $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
                     $this->validate($request, Photo::$rules, Photo::$messages );
@@ -179,14 +179,9 @@ class EmployeesController extends Controller
                 //先に親テーブルphotosに保存
                 // dd($request->all());
 
-                // $request->image 
-                // 画像アップロードしてきたものを、ここで、photoテーブルに保存する
-                // base64エンコードに変換 バイナリーデータになってる
+                // もし、画像アップロードしてきたら、先に、主テーブルのphotosテーブルに保存する
 
-                // $data = base64_encode($request->image);
-                // dd($data);
-
-                //POSTされた画像ファイルデータ取得しbase64でエンコードする
+                //もし、POSTされた画像ファイルデータがあれば取得しbase64でエンコードする
                 if ($request->photo_data){ // 画像変更編集しない場合もあるから
                     $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
                                    $this->validate($request, Photo::$rules, Photo::$messages );
@@ -199,18 +194,15 @@ class EmployeesController extends Controller
                                     // dd( $path['extension']);
                                     
                                     $param = [
-                                        // 'photo_data' => $data,
-                                        // 試してみる
                                         'photo_data' =>$photo_data,
                                         'mime_type' =>  $path['extension'],
                                     ];
                                    
                                     $photo->fill($param)->save();
-                                    // ここまで来るってことは、成功してるってこと
-                                    // 続いて子テーブル
-                                    // $employee->photo_id = $request->photo_id;
-                                    // $employee->save();
+                                    // ここまで来るってことは、主テーブルphotos成功してるってこと
                 }
+                // 続けて、従テーブルのemployeesテーブル操作する
+                
 
                 $f_message = "登録に成功しました";
                              

@@ -140,8 +140,9 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         <div class="form-group">
                              {{-- 直接blade.phpファイルに書くか、public/jsフォルダでも切ってインクルードする。
                             <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script> --}}
+                            <small>※ 000-0000 の形式で入力してください</small><br>
                             {!! Form::label('zip_number', '郵便番号:') !!}
-                             {!!  Form::text('zip_number', null, [ 'onkeyup'=>"AjaxZip3.zip2addr(this,'','pref','address1','address2','address3') "], ['class' => 'form-control']);  !!}<br>
+                             {!!  Form::text('zip_number', null, [ 'onkeyup'=>"AjaxZip3.zip2addr(this,'','pref','address1','address2','address3') "], ['class' => 'form-control' ]);  !!}<br>
                             {{-- なぜか都道府県が1個後ろにズレる…。とりあえず空要素を先頭に入れてみた。プルダウンの場合は、都道府県コードで返ってきている？ --}}
                                                         
                             {!! Form::label('pref', '都道府県:') !!}
@@ -169,43 +170,28 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                             {!! Form::text('pref', null, ['class' => 'form-control']) !!}
                         </div>  --}}
                      
-
                         {{-- @error('address')
                         <p>{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('address', '住所:') !!}
                             {!! Form::text('address', null, ['class' => 'form-control']) !!}
-                        </div>  --}}
-
-                        
+                        </div>  --}}                       
 
                         @error('department_id')
                         <p>{{$message}}</p>
-                        @enderror
-
-                       
-                      {{--  $dep_name は連想配列です D01 から総務部 D02 営業部 D03 経理部　そのほか --}}
-
-                        @if($action === "edit")
-                        {{-- 編集だったら --}}
+                        @enderror                                              
+                        {{--  $dep_name は連想配列です D01 から総務部 D02 営業部 D03 経理部　そのほか --}}
+                        @if($action === "add")
                         <div class="form-group">
-
-                            {!! Form::label('department_id','所属:') !!}
-                            {!! Form::select('department_id',   $dep_name ,  ['class' => 'form-control']); !!}
-
-                            {{-- {!! Form::label('department_id', '所属:') !!}
-                            {!! Form::text('department_id', $employee->department->department_name , ['class' => 'form-control']) !!} --}}
-                        </div> 
-                        @else
-                        {{-- 新規だったら --}}
+                        {!! Form::label('department_id','所属:') !!}
+                        {!! Form::select('department_id',   $dep_name , null, ['class' => 'form-control' , 'placeholder' => '選択してください']); !!}
+                        </div>
+                        @elseif($action === "edit")
                         <div class="form-group">
                             {!! Form::label('department_id','所属:') !!}
-                            {!! Form::select('department_id', $dep_name ,  ['class' => 'form-control']); !!}<br>
-
-                            {{-- {!! Form::label('department_id', '所属:') !!}
-                            {!! Form::text('department_id', null , ['class' => 'form-control']) !!} --}}
-                        </div> 
+                            {!! Form::select('department_id',   $dep_name , $employee->department_id, ['class' => 'form-control' ]); !!}
+                            </div>
 
                         @endif
 
