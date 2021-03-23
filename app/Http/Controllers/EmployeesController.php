@@ -127,6 +127,7 @@ class EmployeesController extends Controller
                 }
 
                 // つづいて子テーブルemployees
+                // バリデーション
                 // $this->validate($request, Employee::$rules, Employee::$messages);
                 
                 // dd($request->gender);
@@ -202,7 +203,26 @@ class EmployeesController extends Controller
                                     // ここまで来るってことは、主テーブルphotos成功してるってこと
                 }
                 // 続けて、従テーブルのemployeesテーブル操作する
-                
+                // バリデーション
+                // $this->validate($request, Employee::$rules, Employee::$messages);
+
+                // 社員ID 以外を上書き保存する
+                $employee->name = $request->name;
+                $employee->age = $request->age;
+                $employee->gender = $request->gender;
+                // ここがポイント 写真を差し替えているかもしれないので、差し替えてなくてもする
+                $employee->photo_id = $photo->photo_id;
+
+                $employee->zip_number = $request->zip_number;
+                $employee->pref = $request->pref;
+                $employee->address1 = $request->address1;
+                $employee->address2 = $request->address2;
+                $employee->address3 = $request->address3;
+                $employee->department_id = $request->department_id;
+                $employee->hire_date = $request->hire_date;
+                $employee->retire_date = $request->retire_date;
+                $employee->save();
+                // ここまで来るってことは、エラーがなかったということ
 
                 $f_message = "登録に成功しました";
                              
