@@ -32,9 +32,22 @@ class Employee extends Model
     protected $guarded = ['employee_id', 'photo_id' ,'retire_date'];
 
 
-     // バリデーションのルール
+     // バリデーションのルール ユーザーが入力してくるフィールドを書く
+     // requireフィールドでない場合は、データベーステーブルで列をnull許容にします　こっちにも 'nullable' 
      public static $rules = [
-        'name' => 'required',
+        'name' => ['required', 'string', 'max:255' ],
+        'age' => [ 'required' , 'numeric', 'between:0,150' ],
+        // テンプレートのほう（Formファザード）には、required属性はつけないでおく
+        'gender' => [ 'required' ,'string', 'size:1', 'in:男,女' ],
+       
+        'zip_number' => [ 'required', 'regix:/^[0-9]{3}-?[0-9]{4}$/'],
+        'pref' => [ 'required' ,'string'],
+        'address1' => [ 'required' ,'string' ],
+        'address2' => [ 'required' ,'string'],
+        'address3' => [ 'required' ,'string'],
+        'department_id' => [ 'required','string' ],
+        'hire_date' => [ 'required', 'date' ],
+        'retire_date' => [ 'nullable', 'date' ],
 
     ];
 
@@ -88,7 +101,7 @@ class Employee extends Model
         return $str;
     }
 
-    // もう一つメソッド必要？？性別の
+   
 
     
 }
