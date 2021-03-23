@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Photo;
 use App\Models\Department;
 use DB;
+use App\Http\Requests\EmployeeFormRequest;
 
 class EmployeesController extends Controller
 {
@@ -73,7 +74,7 @@ class EmployeesController extends Controller
 
                 return view('employees.emp_get', 
                 [ 
-                    'image' => $employee->photo->photo_data,
+                    'photo_data' => $employee->photo->photo_data,
                     'dep_name' => $dep_name,
                     'employee' => $employee ,
                     'action' => $action,
@@ -83,7 +84,7 @@ class EmployeesController extends Controller
             }
     }
 
-    public function empPost(Request $request)
+    public function empPost(EmployeeFormRequest $request)
     {
 
         $action = $request->action;
@@ -99,7 +100,9 @@ class EmployeesController extends Controller
                 //もし、POSTされた画像ファイルデータがあれば取得しbase64でエンコードする
                 if (isset($request->photo_data)){ 
                     $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
-                    $this->validate($request, Photo::$rules, Photo::$messages );
+                    
+                    // 今回は、フォームリクエストを使ってバリデーションするので
+                    // $this->validate($request, Photo::$rules, Photo::$messages );
                     // dd($request->photo_data);
                     
                     // 画像タイプの確認
@@ -127,8 +130,8 @@ class EmployeesController extends Controller
                 }
 
                 // つづいて子テーブルemployees
-                // バリデーション
-                $this->validate($request, Employee::$rules, Employee::$messages);
+                // バリデーションは、フォームリクエストで行う
+                // $this->validate($request, Employee::$rules, Employee::$messages);
                 
                 // dd($request->gender);
                 // dd($request->zip_number);
@@ -185,7 +188,7 @@ class EmployeesController extends Controller
                 //もし、POSTされた画像ファイルデータがあれば取得しbase64でエンコードする
                 if ($request->photo_data){ // 画像変更編集しない場合もあるから
                     $photo_data = base64_encode(file_get_contents($request->photo_data->getRealPath()));
-                                   $this->validate($request, Photo::$rules, Photo::$messages );
+                                //    $this->validate($request, Photo::$rules, Photo::$messages );
                                     // dd($request->image);
                                     
                                     // 画像タイプの確認

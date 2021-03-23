@@ -34,46 +34,57 @@ class Employee extends Model
 
      // バリデーションのルール ユーザーが入力してくるフィールドを書く
      // requireフィールドでない場合は、データベーステーブルで列をnull許容にします　こっちにも 'nullable' 
-     public static $rules = [
-        'name' => ['required', 'string', 'max:255' ],
-        'age' => [ 'required' , 'numeric', 'between:0,150' ],
-        // テンプレートのほう（Formファザード）には、required属性はつけないでおく
-        'gender' => [ 'required' ,'string', 'size:1', 'in:男,女' ],
+    // 今回は、サービスプロバイダーを使って、バリデーションしてます
+// EmployeeFormRequest    ValidatorServiceProvider  を使ってますので、
+// モデルクラスには定義してません
+
+    //  public static $rules = [
+    //     'name' => ['required', 'string', 'max:255' ],
+    //     'age' => [ 'required' , 'numeric', 'between:0,150' ],
+    //     // テンプレートのほう（Formファザード）には、required属性はつけないでおく
+    //     'gender' => [ 'required' ,'string', 'size:1', 'in:男,女' ],
        
-        // 'zip_number' => [ 'required', 'regex:/^[0-9]{3}-?[0-9]{4}$/'],
-        // 'zip_number' => [ 'required', 'regex:/^\d{3}\-\d{4}$/'],
-        'zip_number' => [ 'required', 'regex:/^[0-9]{3}-[0-9]{4}$/'],
-        'pref' => [ 'required' ,'string'],
-        'address1' => [ 'required' ,'string' ],
-        'address2' => [ 'required' ,'string'],
-        'address3' => [ 'required' ,'string'],
-        'department_id' => [ 'required','string' ],
-        'hire_date' => [ 'required', 'date' ],
-        'retire_date' => [ 'nullable', 'date' ],
+    //     // これらを使うと、編集の際に、おかしくなりますので、使いません。
+    //     // サービスプロバイダーを使います
 
-    ];
+    //     // ハイフンありなしどちらでも
+    //     // 'zip_number' => [ 'required', 'regex:/^[0-9]{3}-?[0-9]{4}$/'],
+    //     // ハイフンアリだけ
+    //     // 'zip_number' => [ 'required', 'regex:/^[0-9]{3}-[0-9]{4}$/'],
+    //     // 'zip_number' => [ 'required', 'regex:/^\d{3}\-\d{4}$/'],
+    //     'zip_number' => [ 'required'],
+    //     'pref' => [ 'required' ,'string'],
+    //     'address1' => [ 'required' ,'string' ],
+    //     'address2' => [ 'required' ,'string'],
+    //     'address3' => [ 'required' ,'string'],
+    //     'department_id' => [ 'required','string' ],
+    //     'hire_date' => [ 'required', 'date' ],
+    //     'retire_date' => [ 'nullable', 'date' ],
 
-    // エラーメッセージ
-    public static $messages = [
-        'name.required' => '名前は必ず入力してください',
+    // ];
 
-        'name.max' => '名前は255字以内で記入してください',
-        'age.required' => '年齢は必ず入力してください',
-        'age.numeric' => '年齢は数値を入力してください',
-        'age.between' => '年齢は0以上150以内で入力してください',
-        'gender.required' => '性別を選択してください',
-        'gender.in' => '性別を選択してください',
-        'zip_number.required' => '郵便番号は必ず入力してください',
-        'zip_number.regex' => '郵便番号は　000-0000 の形式で入力してください',
-        'pref.required' => '都道府県は必ず入力してください',
-        'address1.required' => '住所(市区町村郡)は必ず入力してください',
-        'address2.required' => '住所(町名番地)は必ず入力してください',
-        'address3.required' => '住所(建物名)は必ず入力してください',
-        'department_id.required' => '所属を選択してください',
-        'hire_date.required' => '入社日は必ず入力してください',
-        'hire_date.date' => '入社日は、日付の形式で入力してください',
-        'retire_date.date' => '退社日は、日付の形式で入力してください',
-    ];
+    // エラーメッセージ 今回は、モデルクラスには定義しない
+
+    // public static $messages = [
+    //     'name.required' => '名前は必ず入力してください',
+
+    //     'name.max' => '名前は255字以内で記入してください',
+    //     'age.required' => '年齢は必ず入力してください',
+    //     'age.numeric' => '年齢は数値を入力してください',
+    //     'age.between' => '年齢は0以上150以内で入力してください',
+    //     'gender.required' => '性別を選択してください',
+    //     'gender.in' => '性別を選択してください',
+    //     'zip_number.required' => '郵便番号は必ず入力してください',
+    //     'zip_number.regex' => '郵便番号は　000-0000 の形式で入力してください',
+    //     'pref.required' => '都道府県は必ず入力してください',
+    //     'address1.required' => '住所(市区町村郡)は必ず入力してください',
+    //     'address2.required' => '住所(町名番地)は必ず入力してください',
+    //     'address3.required' => '住所(建物名)は必ず入力してください',
+    //     'department_id.required' => '所属を選択してください',
+    //     'hire_date.required' => '入社日は必ず入力してください',
+    //     'hire_date.date' => '入社日は、日付の形式で入力してください',
+    //     'retire_date.date' => '退社日は、日付の形式で入力してください',
+    // ];
     
     //利用上は部署テーブルが社員テーブルの親ということになる。
     // つまり、部署の下に社員が存在しているという関係です

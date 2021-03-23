@@ -101,12 +101,9 @@ laravelcollectiveフォームファサードを使用してこれを追加する
 
    
                         <div style="margin-top:15px" >
-                            @if ( $action == "edit" )
-                                {{-- @if ($photo->photo_data != null && $photo->mime_type != null) --}}
+                            @if ( $action == "edit" )                            
                                 写真:
-                                <img src="data:image/{{$employee->photo->mime_type}};base64,{{$image}}" alt="写真" title="社員の写真" width="300" height="250">
-                               
-                                {{-- @endif --}}
+                                <img src="data:image/{{$employee->photo->mime_type}};base64,{{$photo_data}}" alt="写真" title="社員の写真" width="300" height="250">
                             @endif
                         </div>
 
@@ -135,25 +132,29 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                                 {!! Form::label('zip_number', '郵便番号:') !!}
                                 {!!  Form::text('zip_number', null, [ 'onkeyup'=>"AjaxZip3.zip2addr(this,'','pref','address1','address2','address3') "], ['class' => 'form-control' ]);  !!}<br>
                                 {{-- なぜか都道府県が1個後ろにズレる…。とりあえず空要素を先頭に入れてみた。プルダウンの場合は、都道府県コードで返ってきている？ --}}
-                                
+                        </div> 
+                        <div class="form-group">       
                                 @error('pref')
                                 <p class="validation">{{$message}}</p>
                                 @enderror
                                 {!! Form::label('pref', '都道府県:') !!}
-                                {!! Form::select('pref', [ '', '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'], $employee->pref  , ['class' => 'form-control']); !!}<br>
-                                
+                                {!! Form::select('pref', [ '', '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'], $employee->pref  , ['class' => 'form-control', 'placeholder' => '選択してください']); !!}<br>
+                        </div> 
+                        <div class="form-group">         
                                 @error('address1')
                                 <p class="validation">{{$message}}</p>
                                 @enderror
                                 {!! Form::label('address1', '住所（市区町村郡）:') !!}
                                 {!!  Form::text('address1', null, ['class' => 'form-control']); !!}<br>
-                                
+                        </div> 
+                        <div class="form-group">             
                                 @error('address2')
                                 <p class="validation">{{$message}}</p>
                                 @enderror
                                 {!! Form::label('address2', '住所（町名番地）:') !!} 
                                 {!!  Form::text('address2', null, ['class' => 'form-control']); !!}<br>
-                                
+                        </div> 
+                        <div class="form-group">             
                                 @error('address3')
                                 <p class="validation">{{$message}}</p>
                                 @enderror
