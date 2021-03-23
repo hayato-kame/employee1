@@ -128,7 +128,7 @@ class EmployeesController extends Controller
 
                 // つづいて子テーブルemployees
                 // バリデーション
-                // $this->validate($request, Employee::$rules, Employee::$messages);
+                $this->validate($request, Employee::$rules, Employee::$messages);
                 
                 // dd($request->gender);
                 // dd($request->zip_number);

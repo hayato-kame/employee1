@@ -27,13 +27,14 @@ class Photo extends Model
     // バリデーションのルール 'file' アップロードされたファイルであること
     // 'image'  画像ファイルであること  mimes  MIMEタイプ指定
     public static $rules = [
-        'photo_data' => [ 'nullable','file', 'image', 'mimes:jpeg, png, jpg, tmp' ],
+        'photo_data' => [ 'nullable','file', 'image', 'max:1024', 'mimes:jpeg, png, jpg, tmp' ],
     ];
 
     // エラーメッセージ
     public static $messages = [
         'photo_data.file' => '画像ファイルを選んでください',
         'photo_data.image' => '画像ファイルを選んでください',
+        'photo_data.max' => '1Mを超えています',
         'photo_data.mimes' => '画像ファイルは、jpeg png jpg のいずれかにして下さい',
         
     ];

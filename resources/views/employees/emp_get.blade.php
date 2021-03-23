@@ -43,7 +43,7 @@ $label = "";
             
             <div class="toolbar">{!! link_to_route('employees.index', '社員一覧ページへ戻る',[]) !!}</div>
             
-            <div class="row">
+            <div class="row cmt">
                 <div class="col-sm-6 offset-sm-3">
 
                      {{-- 新規作成の時には、社員IDが表示される、空のインスタンスをコントローラで作ってるから
@@ -65,8 +65,8 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         {!! Form::hidden('employee_id', $employee->employee_id) !!}
                         {!! Form::hidden('photo_id', $employee->photo_id) !!}
 
-                        @error('employee_name')
-                        <p>{{$message}}</p>
+                        @error('name')
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('name', '名前:') !!}
@@ -74,16 +74,16 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         </div> 
 
 
-                        @error('employee_age')
-                        <p>{{$message}}</p>
+                        @error('age')
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('age', '年齢:') !!}
                             {!! Form::text('age', null, ['class' => 'form-control']) !!}
                         </div>
 
-                        @error('employee_gender')
-                        <p>{{$message}}</p>
+                        @error('gender')
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         
                         <div class="form-check form-check-inline">
@@ -113,7 +113,10 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                                 {{-- 写真のアップロードemployeesは 'photo_id' カラムしかもってない--}}
                              
                         @error('photo_id')
-                        <p>{{$message}}</p>
+                        <p class="validation">{{$message}}</p>
+                        @enderror
+                        @error('photo_data')
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         {{-- フォームタグの'files' => trueが必要である --}}
                         <div class="form-group">                          
@@ -122,39 +125,39 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                             {!! Form::hidden('photo_id', $employee->photo_id) !!}
                         </div> 
                         
-                        @error('zip_number')
-                        <p>{{$message}}</p>
-                        @enderror
-                        @error('pref')
-                        <p>{{$message}}</p>
-                        @enderror
-                        @error('address1')
-                        <p>{{$message}}</p>
-                        @enderror
-                        @error('address2')
-                        <p>{{$message}}</p>
-                        @enderror
-                        @error('address3')
-                        <p>{{$message}}</p>
-                        @enderror
                         <div class="form-group">
-                             {{-- 直接blade.phpファイルに書くか、public/jsフォルダでも切ってインクルードする。
-                            <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script> --}}
-                            <small>※ 000-0000 の形式で入力してください</small><br>
-                            {!! Form::label('zip_number', '郵便番号:') !!}
-                             {!!  Form::text('zip_number', null, [ 'onkeyup'=>"AjaxZip3.zip2addr(this,'','pref','address1','address2','address3') "], ['class' => 'form-control' ]);  !!}<br>
-                            {{-- なぜか都道府県が1個後ろにズレる…。とりあえず空要素を先頭に入れてみた。プルダウンの場合は、都道府県コードで返ってきている？ --}}
-                                                        
-                            {!! Form::label('pref', '都道府県:') !!}
-                             {!! Form::select('pref', [ '', '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'], $employee->pref  , ['class' => 'form-control']); !!}<br>
-                            
-                             {!! Form::label('address1', '住所（市区町村郡）:') !!}
-                             {!!  Form::text('address1', null, ['class' => 'form-control']); !!}<br>
-                            
-                             {!! Form::label('address2', '住所（町名番地）:') !!} 
-                            {!!  Form::text('address2', null, ['class' => 'form-control']); !!}<br>
-                            
-                            {!! Form::label('address3', '住所（建物名）:') !!} 
+                            {{-- 直接blade.phpファイルに書くか、public/jsフォルダでも切ってインクルードする。
+                                <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script> --}}
+                                @error('zip_number')
+                                <p class="validation">{{$message}}</p>
+                                @enderror
+                                <small>※ 000-0000 の形式で入力してください</small><br>
+                                {!! Form::label('zip_number', '郵便番号:') !!}
+                                {!!  Form::text('zip_number', null, [ 'onkeyup'=>"AjaxZip3.zip2addr(this,'','pref','address1','address2','address3') "], ['class' => 'form-control' ]);  !!}<br>
+                                {{-- なぜか都道府県が1個後ろにズレる…。とりあえず空要素を先頭に入れてみた。プルダウンの場合は、都道府県コードで返ってきている？ --}}
+                                
+                                @error('pref')
+                                <p class="validation">{{$message}}</p>
+                                @enderror
+                                {!! Form::label('pref', '都道府県:') !!}
+                                {!! Form::select('pref', [ '', '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'], $employee->pref  , ['class' => 'form-control']); !!}<br>
+                                
+                                @error('address1')
+                                <p class="validation">{{$message}}</p>
+                                @enderror
+                                {!! Form::label('address1', '住所（市区町村郡）:') !!}
+                                {!!  Form::text('address1', null, ['class' => 'form-control']); !!}<br>
+                                
+                                @error('address2')
+                                <p class="validation">{{$message}}</p>
+                                @enderror
+                                {!! Form::label('address2', '住所（町名番地）:') !!} 
+                                {!!  Form::text('address2', null, ['class' => 'form-control']); !!}<br>
+                                
+                                @error('address3')
+                                <p class="validation">{{$message}}</p>
+                                @enderror
+                            {!! Form::label('address3', '住所（建物名や番号）:') !!} 
                             {!!  Form::text('address3', null, ['class' => 'form-control']); !!}<br>
 
                             {{-- {!! Form::label('zip_number', '郵便番号:') !!}
@@ -163,7 +166,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
 
 
                         {{-- @error('pref')
-                        <p>{{$message}}</p>
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('pref', '都道府県:') !!}
@@ -171,7 +174,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         </div>  --}}
                      
                         {{-- @error('address')
-                        <p>{{$message}}</p>
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('address', '住所:') !!}
@@ -179,7 +182,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         </div>  --}}                       
 
                         @error('department_id')
-                        <p>{{$message}}</p>
+                        <p class="validation">{{$message}}</p>
                         @enderror                                              
                         {{--  $dep_name は連想配列です D01 から総務部 D02 営業部 D03 経理部　そのほか --}}
                         @if($action === "add")
@@ -196,7 +199,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         @endif
 
                         @error('hire_date')
-                        <p>{{$message}}</p>
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('hire_date', '入社日:') !!}
@@ -204,7 +207,7 @@ laravelcollectiveフォームファサードを使用してこれを追加する
                         </div> 
 
                         @error('retire_date')
-                        <p>{{$message}}</p>
+                        <p class="validation">{{$message}}</p>
                         @enderror
                         <div class="form-group">
                             {!! Form::label('retire_date', '退社日:') !!}

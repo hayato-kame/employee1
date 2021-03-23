@@ -38,6 +38,18 @@
     background-color: #ccf;
     border-radius: 5px;
     }
+     /*バリデーションのエラーメッセージ */
+    .cmt p.validation {
+        color:  rgb(21, 21, 126) ;
+        font-size: 60%;
+        background-color: #cccce9 ;
+
+    }
+
+    /*バリデーションのエラーメッセージ */
+    .cmt p.validation::before {
+        content: "※"
+    }
 
    </style>
 </head>
