@@ -43,7 +43,7 @@ class EmployeeFormRequest extends FormRequest
 
             'name' => ['required', 'string', 'max:255' ],
             'age' => [ 'required' , 'numeric', 'between:0,150' ],
-            // テンプレートのほう（Formファザード）には、required属性はつけないでおく
+            // 性別のラジオボタンはテンプレートのほう（Formファザード）には、required属性はつけないでおく
             'gender' => [ 'required' ,'string', 'size:1', 'in:男,女' ],
            
             'pref' => [ 'required' ,'string'],

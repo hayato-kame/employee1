@@ -45,7 +45,9 @@ class CreateEmployeesTable extends Migration
             // 写真テーブルの従テーブルです 
             // 部署テーブルの従テーブルです
              // 外部キー制約 従テーブル側に書く
+             // 'department_id'　あとで、ほかのマイグレーションファイルで一度削除してから、再度外部キー制約張り直してます->onDelete('restrict')をつけて
              $table->foreign('department_id')->references('department_id')->on('departments');
+
              $table->foreign('photo_id')->references('photo_id')->on('photos');
            
         });

@@ -2,6 +2,8 @@
     {{-- @auth @else @endauth は、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
 
 @auth
+{{-- link_to_route　なので　'/dashboard'  ではない --}}
+<div class="toolbar">{!! link_to_route('dashboard', 'DashBoardページへ',[]) !!}</div>
 @if (count($users) > 0)
 
 <p>ユーザ一覧:</p>
