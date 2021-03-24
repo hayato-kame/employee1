@@ -8,6 +8,7 @@ use App\Models\Photo;
 use App\Models\Department;
 use DB;
 use App\Http\Requests\EmployeeFormRequest;
+use Illuminate\Support\Facades\Log;
 
 class EmployeesController extends Controller
 {
@@ -231,6 +232,7 @@ class EmployeesController extends Controller
                              
                 break;
             }
+           
             return redirect('/employees')->with('flash_message', $f_message);
 
     }

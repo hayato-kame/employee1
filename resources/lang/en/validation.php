@@ -115,7 +115,15 @@ return [
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => 'The :attribute has already been taken.',
-    'uploaded' => 'The :attribute failed to upload.',
+
+    // php.iniのアップロード上限を超えているときに出るエラーメッセジ
+    // この 'uploaded'  は、ここでしか使えない。モデルクラスとかには設定できないルール名
+    // だから、こっちで修正する
+    // 'uploaded' => 'The :attribute failed to upload.',
+     // 　php.ini の　2M デフォルト値を超えると出るエラー　upload_max_filesize = 2M　
+     // 今回は、EmployeeFormRequest　にてバリデーションで max:1024 なので、
+     // エラーメッセージに、1M以下にしてください　と記述する
+    'uploaded' => ':attributeのアップロードに失敗しました。画像ファイルは 1M以下にしてください',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 

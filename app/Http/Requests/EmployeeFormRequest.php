@@ -27,6 +27,17 @@ class EmployeeFormRequest extends FormRequest
        
     }
 
+    // post_max_size　　　POSTリクエストの上限サイズ
+//  post_max_size   POSTリクエストの中身が8MBを超えてますよという  ログを見るとこんなWarningが出力されています。
+//     PHPではセキュリティなどの都合でリクエストの上限サイズが設定されています。
+// 上限サイズを変更したい場合はphp.iniの設定を変更する必要があります。
+// php.iniファイルを開いてpost_max_sizeを探します。post_max_size = 20M
+// 大きなファイルをアップロードすると403になってしまったりする場合はこれが原因である場合が多いです。
+// アップロード画像が php.ini　デフォルトだと upload_max_filesize = 2M  これも  upload_max_filesize = 30M  にするなど
+// 2つの値を設定したらサーバーを再起動するのを忘れないように
+// でも今回は、変更しません。The photo data failed to upload.　のエラーメッセージが出ますので、
+//  resource/lang\en/validation.php ファイルを修正して日本語にします。
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -35,7 +46,7 @@ class EmployeeFormRequest extends FormRequest
     public function rules()
     {
         return [
-
+            // このほか、php.iniファイルの上限を超えると、The photo data failed to upload.　のエラーメッセージが出ます
             'photo_data' => [ 'nullable','file', 'image', 'max:1024', 'mimes:jpeg, png, jpg, tmp' ],
 
             'zip_number' => ['required', 'my_zip_regex'],
@@ -52,14 +63,14 @@ class EmployeeFormRequest extends FormRequest
             'address3' => [ 'required' ,'string'],
             'department_id' => [ 'required','string' ],
             'hire_date' => [ 'required', 'date' ],
-            'retire_date' => [ 'nullable', 'date' ],
+            'retire_date' => [ 'nullable', 'date', 'after_or_equal:hire_date' ],
         ];
     }
 
     public function messages() {
 
         return  [
-
+           
             'photo_data.file' => '画像ファイルを選んでください',
             'photo_data.image' => '画像ファイルを選んでください',
             'photo_data.max' => '1Mを超えています',
@@ -85,7 +96,9 @@ class EmployeeFormRequest extends FormRequest
             'department_id.required' => '所属を選択してください',
             'hire_date.required' => '入社日は必ず入力してください',
             'hire_date.date' => '入社日は、日付の形式で入力してください',
+   
             'retire_date.date' => '退社日は、日付の形式で入力してください',
+            'retire_date.after_or_equal' => '退社日は、入社日以降の日付です',
         ];
     }
 }

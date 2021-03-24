@@ -39,7 +39,7 @@
     border-radius: 5px;
     }
      /*バリデーションのエラーメッセージ */
-    .cmt p.validation {
+    p.validation {
         color:  rgb(21, 21, 126) ;
         font-size: 60%;
         background-color: #cccce9 ;

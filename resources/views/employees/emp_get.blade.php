@@ -28,7 +28,7 @@ $label = "";
     
        
         @if (count($errors) > 0)
-            <p>入力に問題があります</p>
+            <p style="color: red ;">入力に問題があります</p>
         @endif
 
         
