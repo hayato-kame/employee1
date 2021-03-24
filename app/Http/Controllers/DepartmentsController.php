@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\DeleteException;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
@@ -96,6 +97,7 @@ class DepartmentsController extends Controller
 
               // フラッシュメッセージ設定 成功時
               $f_message = '部署名を削除しました';
+
               try {
                 // 外部キー制約でオプションが->onDelete('restrict')　をつけているので、
                 // もし、削除しようとした部署名に、所属する社員がいたら、削除禁止にしていますので、
@@ -106,6 +108,7 @@ class DepartmentsController extends Controller
                 $f_message = 'この部署は、所属する社員がいるので、削除できませんでした';
                 return redirect('/departments')->with([ 'flash_message' => $f_message ]);  // return　で即終了して呼び出し元へ戻ります
               }
+
               break;
 
           case "cancel": 
