@@ -26,7 +26,7 @@ class Photo extends Model
 
     // バリデーションのルール 'file' アップロードされたファイルであること
     // 'image'  画像ファイルであること  mimes  MIMEタイプ指定
-    // 今回は、フォームリクエストを使うので、そちらに定義する
+    // 今回は、フォームリクエストを使うので、そちらに定義する 1MB = 1024KB 2MB = 2048KB
 
     // public static $rules = [
     //     'photo_data' => [ 'nullable','file', 'image', 'max:1024', 'mimes:jpeg, png, jpg, tmp' ],

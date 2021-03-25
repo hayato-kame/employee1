@@ -9,7 +9,6 @@
 
 @section('content')
 
-
 <h3>部署一覧:</h3>
 {{-- フラッシュメッセージ --}}
 @if (session('flash_message'))
@@ -49,7 +48,7 @@
             {!! Form::submit('削除', ['class' => 'btn btn-danger' , 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
             {!! Form::close() !!}
         </td>   
-        
+       
     </tr>
     @endforeach
 </table>

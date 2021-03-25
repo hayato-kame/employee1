@@ -154,7 +154,7 @@ class EmployeesController extends Controller
                 } 
                 // もし $last が null だったら、初期値をセットする
                 // ここで、インスタンスのプロパティに作成した従業員IDをセット
-               $employee->employee_id = $resultStrId;
+                $employee->employee_id = $resultStrId;
 
                 $employee->name = $request->name;
                 $employee->age = $request->age;
@@ -174,7 +174,7 @@ class EmployeesController extends Controller
            
                 $f_message = "登録に成功しました";
                
-                 break;
+                break;
 
                 //  編集の時には、表示の処理もある
             case "edit": 
@@ -231,6 +231,8 @@ class EmployeesController extends Controller
                 $f_message = "登録に成功しました";
                              
                 break;
+
+
             }
            
             return redirect('/employees')->with('flash_message', $f_message);
