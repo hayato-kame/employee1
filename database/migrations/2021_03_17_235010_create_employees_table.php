@@ -24,7 +24,8 @@ class CreateEmployeesTable extends Migration
                         
             $table->string('name', 50);
             $table->integer('age'); //integerの第二引数には入れないでください！
-            // 入れたら、プライマリーキーとして登録されてしまいます。第二引数が0以外になると、true になってしまう
+            // 入れたら、プライマリーキーとして登録されてしまいます。第二引数が0以外になると、true になってしまう, 第二引数のデフォルト値は、falseなので、
+            // trueになると、おかしくなりますので
             $table->string('gender', 1); // 文字長を1に指定 　男  か　女
             
             $table->unsignedBigInteger('photo_id');  // 外部キーのフィールド
@@ -45,9 +46,15 @@ class CreateEmployeesTable extends Migration
             // 写真テーブルの従テーブルです 
             // 部署テーブルの従テーブルです
              // 外部キー制約 従テーブル側に書く
-             // 'department_id'　あとで、ほかのマイグレーションファイルで一度削除してから、再度外部キー制約張り直してます->onDelete('restrict')をつけて
              $table->foreign('department_id')->references('department_id')->on('departments');
 
+
+   // この後マイグレーションファイルを作って、一旦リレーションを無くした。
+   // それから、再度マイグレーションファイルを作って、
+   // リレーションの ->onDelete('cascade')  をつけた　これは、
+        // 親テーブルのデータ一行分を削除すると、関連する子テーブルがあっても、
+        // エラーにならないで、関連する子テーブルのデータも一緒に消去できるようになるというもの
+        // ですから、親テーブルを削除するだけで、関連する子テーブルのデータも一行分削除できている
              $table->foreign('photo_id')->references('photo_id')->on('photos');
            
         });

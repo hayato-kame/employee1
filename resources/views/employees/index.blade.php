@@ -42,9 +42,9 @@
                 </td>                    
                 <td>
                     {{-- RESTful じゃないから 'method' => 'delete'  じゃない 'method' => 'post' です 'method' => 'post' だったら省略可 --}}
-                    {!! Form::model($employee, ['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!}
+                    {!! Form::model($employee, ['route' => ['employees.delete', $employee->employee_id], 'method' => 'post'])  !!}
                     {{-- {!! Form::open(['route' => ['employees.emp_post', $employee->employee_id], 'method' => 'post'])  !!} --}}
-                        {!! Form::hidden('action', "delete")  !!}
+                        {!! Form::hidden('photo_id', $employee->photo->photo_id)  !!}
                         {!! Form::hidden('employee_id', $employee->employee_id)  !!}
                         {!! Form::submit('削除', ['class' => 'btn btn-danger' , 'onclick' => 'confirm("本当に削除してよろしいですか")']) !!}
                     {!! Form::close() !!}

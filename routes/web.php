@@ -49,5 +49,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/employees/emp_get',  [ EmployeesController::class, 'empGet'] )->name('employees.emp_get');
     Route::post('/employees/emp_get',  [ EmployeesController::class, 'empPost'] )->name('employees.emp_post');
-
+    Route::post('/employees/delete', [ EmployeesController::class, 'delete' ])->name('employees.delete');
+    
 });

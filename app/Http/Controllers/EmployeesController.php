@@ -54,8 +54,7 @@ class EmployeesController extends Controller
                  break;
 
             case "edit": 
-                // getでアクセスされたときに、写真表示しないといけない
-                // 編集の処理 
+                // 編集のページはgetでアクセスされたときに、写真表示しないといけない
                 $departments = Department::all(); // セレクトボックスに一覧が必要$departmentsはコレクション
                 // dd($departments->all());
                 $depArray = $departments->all();
@@ -81,19 +80,16 @@ class EmployeesController extends Controller
                     'action' => $action,
                     'photo_id' => $employee->photo_id]);
                 break;
-
             }
     }
 
     public function empPost(EmployeeFormRequest $request)
     {
-
         $action = $request->action;
         $f_message = ''; // フラッシュメッセージを
         
         switch($action) {
-            case "add": 
-            
+            case "add": // 新規登録 親テーブルから            
                 $photo = new Photo();// 親テーブルを先に
                 $employee = new Employee(); // 従テーブル（子テーブル）
                 // もし、写真をアップロードしてきたら、先に主テーブルのphotosテーブルに登録する
@@ -127,7 +123,6 @@ class EmployeesController extends Controller
                      // ddでデバックすると、trueになってる
                         // dd($photo->save());
                         $photo->save();
-
                 }
 
                 // つづいて子テーブルemployees
@@ -175,12 +170,11 @@ class EmployeesController extends Controller
                 $f_message = "登録に成功しました";
                
                 break;
-
-                //  編集の時には、表示の処理もある
+               
             case "edit": 
-                // 編集の処理  上書き
-                $employee = Employee::find($request->employee_id);
+                // 編集の処理  上書き 親テーブルから
                 $photo = Photo::find($request->photo_id);
+                $employee = Employee::find($request->employee_id);
                 //先に親テーブルphotosに保存
                 // dd($request->all());
 
@@ -228,15 +222,33 @@ class EmployeesController extends Controller
                 $employee->save();
                 // ここまで来るってことは、エラーがなかったということ
 
-                $f_message = "登録に成功しました";
-                             
+                $f_message = "登録に成功しました";                             
                 break;
-
-
             }
            
             return redirect('/employees')->with('flash_message', $f_message);
 
+    }
+
+    public function delete(Request $request)
+    {
+        // dd($request->photo_id);
+        // dd($request->employee_id);
+        // リレーションの ->onDelete('cascade')  をつけた　これは、
+        // 親テーブルのデータ一行分を削除すると、関連する子テーブルがあっても、
+        // エラーにならないで、関連する子テーブルのデータも一緒に消去できるようになるというもの
+        // ですから、親テーブルを削除するだけで、関連する子テーブルのデータも一行分削除できている
+        $employee = Employee::find($request->employee_id);
+        // dd($employee->photo->photo_id);
+        $photo = Photo::find($employee->photo->photo_id);
+        // dd($photo->photo_id);
+        //  dd($photo->delete());
+
+        // 削除の処理は親テーブルだけで良し
+        $photo->delete();
+      
+        $f_message = "削除しました";
+        return redirect('/employees')->with('flash_message', $f_message);
     }
 
 }

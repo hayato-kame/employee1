@@ -30,7 +30,7 @@ class CreatePhotosTable extends Migration
         });
 
         
-        // 推奨されないわけです。大きすぎて無理  登録するときには、小さい画像にしてください
+        // 直接バイナリーデータ推奨されないわけ。大きすぎ  登録する画像は、小さい画像にしておくこと
         // ここで　書いてくださいMEDIUMBLOB　じゃないと、保存できないからです
         DB::statement("ALTER TABLE photos ADD photo_data MEDIUMBLOB");
     }
