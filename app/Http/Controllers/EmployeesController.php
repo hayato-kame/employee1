@@ -332,7 +332,7 @@ class EmployeesController extends Controller
         $employees = Employee::all();
         // dd($employees);
         // 出力のための
-        $head = [ "社員ID","名前","年齢","性別","写真ID","住所","部署ID","入社日","退社日" ];
+        $head = [ "社員ID","名前","年齢","性別","写真ID","郵便番号","都道府県","住所1","住所2","住所3","部署ID","入社日","退社日", "作成日", "更新日" ];
 
         // 書き込み用ファイルを開く
         $file = fopen('test.csv', 'w');
@@ -356,7 +356,7 @@ class EmployeesController extends Controller
         header('Content-Disposition: attachment; filename=test.csv');
         readfile('test.csv');
         // publicの下にtest.csvというCSVファイルが作成されている
-        return redirect('/employees');
+        return redirect('/employees')->with('flash_message' ,'CSVファイルに保存しました。');
     }
 
 }
