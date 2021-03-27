@@ -54,4 +54,5 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/employees/find', [ EmployeesController::class, 'find' ] )->name('employees.find');
     Route::post('/employees/find', [ EmployeesController::class, 'search' ] )->name('employees.search');
 
+    Route::post('/employees/postCSV',  [ EmployeesController::class, 'postCSV' ] )->name('employees.postCSV');
 });

@@ -31,8 +31,12 @@
     <button style="margin-right: 15px" type="button" class="btn btn-light" display="inline-block">{!! link_to_route('employees.find', '検索...', [] , []) !!}</button>
     
     {{-- CSVのボタンは、社員が一人でもいたら、表示することにする --}}
-    {{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
-    <button style="margin-right: 15px" type="button" class="btn btn-light" display="inline-block">{!! link_to_route('employees.emp_get', 'CSVファイルに出力', [] , []) !!}</button>
+    @if (count($employees) > 0)
+    {!! Form::open(['route' => ['employees.postCSV'], 'method' => 'post'])  !!}       
+        {!! Form::submit('CSVファイルに出力', ['class' => 'btn btn-light' ]) !!}
+    {!! Form::close() !!}
+    @endif
+
 
     <hr>
     {{-- ページネーション  --}}

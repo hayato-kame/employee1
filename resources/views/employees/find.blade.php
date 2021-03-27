@@ -16,7 +16,7 @@
 
         <div class="form-group">
         {!! Form::label('department_id','所属:') !!}
-        {!! Form::select('department_id',   $mergeDep , null, ['class' => 'form-control' , 'placeholder' => '選択してください']); !!}
+        {!! Form::select('department_id',   $dep_name , null, ['class' => 'form-control' , 'placeholder' => '選択してください']); !!}
         </div>
         <div class="form-group">
         {!! Form::label('employee_id','社員ID:') !!}

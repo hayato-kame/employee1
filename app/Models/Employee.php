@@ -10,8 +10,7 @@ use  App\Models\Photo;
 class Employee extends Model
 {
     use HasFactory;
-
-    
+   
     //primaryKeyの変更
     protected $primaryKey = "employee_id";
 
@@ -30,7 +29,6 @@ class Employee extends Model
     protected $dates = ['hire_date', 'retire_date' ];
     
     protected $guarded = ['employee_id', 'photo_id' ,'retire_date'];
-
 
      // バリデーションのルール ユーザーが入力してくるフィールドを書く
      // requireフィールドでない場合は、データベーステーブルで列をnull許容にします　こっちにも 'nullable' 
@@ -103,8 +101,7 @@ class Employee extends Model
     }
 
     //　スコープ
-    // 
-    public function scopeSearch($query, $dep_id, $emp_id)
+    public function scopeSearch($query, $dep_id, $emp_id, $word)
     {
         if(!empty($dep_id)){
             $query->where('department_id', $dep_id);
@@ -112,24 +109,15 @@ class Employee extends Model
         if(!empty($emp_id)){
             $query->where('employee_id', $emp_id);
         }
-
-       
+        if(!empty($word)){
+            //  $query->where('name', 'like', "%{$word}%");
+            $query->where('name', 'like', '%' . $word . '%');
+        }
         return $query;
-
-
     }
-
   
-
-    // スコープ
-    public function scopeNameSearch($query, $word)
-    {
-        // return $query->where('name', 'like', "%{$word}%");
-        return $query->where('name', 'like', '%' . $word . '%');
-    }
-
     /**
-     * 住所を表示する
+     * 住所を表示する 使ってない
      * 
      * @return string
      */
@@ -138,7 +126,7 @@ class Employee extends Model
     }
 
     /**
-     * 性別を int から strign型にする
+     * 性別を int から strign型にする　使ってない
      * 
      * @param int $gender
      * @return string 1:男<br>2:女
@@ -155,9 +143,6 @@ class Employee extends Model
                 break;
         }
         return $str;
-    }
-
-   
-
+    }  
     
 }

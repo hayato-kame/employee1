@@ -266,15 +266,14 @@ class EmployeesController extends Controller
         // 注意、配列変数をデバックするときには[]を入れてはいけません
         // dd($dep_name);
         
-        $unselected = ['D00' => '未選択'];
+        // $unselected = ['D00' => '未選択'];
         // マージする
-        $mergeDep = array_merge($unselected , $dep_name);
+        // $mergeDep = array_merge($unselected , $dep_name);
         // dd($mergeDep);  
-        $empleyees = []; // 空の配列
+        $employees = []; // 空の配列
         $result = '';      
-        return view( 'employees.find', [ 'result' => $result, 'mergeDep' => $mergeDep , 'employees' => $empleyees]);
+        return view( 'employees.find', [ 'result' => $result, 'dep_name' => $dep_name , 'employees' => $employees]);
     }
-
     public function search(Request $request)
     {
 
@@ -290,9 +289,9 @@ class EmployeesController extends Controller
         // 注意、配列変数をデバックするときには[]を入れてはいけません
         // dd($dep_name);
         
-        $unselected = ['D00' => '未選択'];
+        // $unselected = ['D00' => '未選択'];
         // マージする
-        $mergeDep = array_merge($unselected , $dep_name);
+        // $mergeDep = array_merge($unselected , $dep_name);
 
 
         $dep_id = $request->department_id;
@@ -304,12 +303,14 @@ class EmployeesController extends Controller
         // dd($word);
         // $employees = Employee::where('department_id', $dep_id)->get();
         $result = '';
-        if($dep_id == null && $emp_id == null){
+        // if($dep_id == null && $emp_id == null　&& $word == null){
+            if (empty($dep_id) && empty($emp_id) && empty($word)){
             $result = '何か入力してください';
             $employees = [];
-           return view('employees.find', ['result' => $result, 'mergeDep' => $mergeDep ,'employees' => $employees]);
+           return view('employees.find', ['result' => $result, 'dep_name' => $dep_name ,'employees' => $employees]);
+           // return が実行されていたら、以降に書いてあるのは実行されない
         }else {
-            $employees = Employee::search($dep_id, $emp_id)->get();
+            $employees = Employee::search($dep_id, $emp_id, $word)->get();
             if (count($employees) > 0){
                 $result = '検索結果です';
 
@@ -322,7 +323,40 @@ class EmployeesController extends Controller
         // $employees = Employee::depIdSearch($dep_id)->empIdSearch($emp_id)->nameSearch($word)->get();
         // セッションに $request->session()->put('employees', $employees) と同じ意味です
     //    return redirect('/employees')->with(['employees'=> $employees]);
-    return view('employees.find', ['result' => $result, 'mergeDep' => $mergeDep ,'employees' => $employees]);
+    return view('employees.find', ['result' => $result, 'dep_name' => $dep_name ,'employees' => $employees]);
+    }
+
+    public function postCSV(Request $request)
+    {
+        // 出力データ
+        $employees = Employee::all();
+        // dd($employees);
+        // 出力のための
+        $head = [ "社員ID","名前","年齢","性別","写真ID","住所","部署ID","入社日","退社日" ];
+
+        // 書き込み用ファイルを開く
+        $file = fopen('test.csv', 'w');
+        // dd($file);
+        if($file){
+            // 見出しの書き込み
+            mb_convert_variables('SJIS', 'UTF-8', $head);
+            fputcsv($file, $head);
+            //  データの書き込み
+            foreach ($employees->toArray() as $employee){
+                // dd($employee);
+                mb_convert_variables('SJIS', 'UTF-8', $employee);
+                fputcsv($file, $employee);
+            }
+        }
+        fclose($file);  // ファイルを閉じる
+
+        // HTTPヘッダ
+        header("Content-Type: application/octet-stream");
+        header('Content-Length: '.filesize('test.csv'));
+        header('Content-Disposition: attachment; filename=test.csv');
+        readfile('test.csv');
+        // publicの下にtest.csvというCSVファイルが作成されている
+        return redirect('/employees');
     }
 
 }
