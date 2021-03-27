@@ -16,8 +16,23 @@ class EmployeesController extends Controller
 
     public function index(Request $request)
     {
-        // 注意 プライマリーキーのフィールド名は 'employee_id' だから、 'id'と指定するとエラー
+        // 検索結果からのredirectで一覧表示 コレクションを見るときは
+        // dd($request->session()->get('employees'));
+        // 配列を見るときは
+        // dd($request->session()->get('employees')->toArray());
+         // ビューには、コレクションで送りますので、->toArray()　はつけません
+        // if ( $request->session()->get('employees') != null){
+        //     // $employees = $request->session()->get('employees')->simplePaginate(5);
+        //     $items = $request->session()->get('employees');
+        //     $employees = $items->all()->paginate(5);
+        // } else {
+        //     // 注意 プライマリーキーのフィールド名は 'employee_id' だから、 'id'と指定するとエラー
+        //     $employees = Employee::orderBy('employee_id', 'desc')->simplePaginate(5);
+        // }
+
+
         $employees = Employee::orderBy('employee_id', 'desc')->simplePaginate(5);
+
         return view('employees.index', ['employees' => $employees]);
     }
 
@@ -274,11 +289,19 @@ class EmployeesController extends Controller
 
     public function search(Request $request)
     {
-        // $depId = $request->department_id;
-        // $empId = $request->employee_id;
-        // $word = $request->word;
-
-       
+        $dep_id = $request->department_id;
+        $emp_id = $request->employee_id;
+        $word = $request->word;
+        // 未選択ならnull
+        // dd($dep_id);
+        // dd($emp_id);
+        // dd($word);
+        $employees = Employee::where('department_id', $dep_id)->get();
+        // dd($employees);
+        // $employees = Employee::depIdSearch($dep_id)->empIdSearch($emp_id)->nameSearch($word)->get();
+        // セッションに $request->session()->put('employees', $employees) と同じ意味です
+    //    return redirect('/employees')->with(['employees'=> $employees]);
+    return view('employees.find', ['employees' => $employees]);
     }
 
 }

@@ -102,6 +102,26 @@ class Employee extends Model
         return $this->belongsTo(Photo::class,'photo_id');
     }
 
+    //　スコープ
+    // 
+    public function scopeDepIdSearch($query, $dep_id)
+    {
+        return $query->where('department_id', $dep_id);
+    }
+
+    // スコープ
+    public function scopeEmpIdSearch($query, $emp_id)
+    {
+        return $query->where('employee_id', $emp_id);
+    }
+
+    // スコープ
+    public function scopeNameSearch($query, $word)
+    {
+        // return $query->where('name', 'like', "%{$word}%");
+        return $query->where('name', 'like', '%' . $word . '%');
+    }
+
     /**
      * 住所を表示する
      * 
