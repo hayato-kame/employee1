@@ -16,21 +16,7 @@ class EmployeesController extends Controller
 
     public function index(Request $request)
     {
-        // 検索結果からのredirectで一覧表示 コレクションを見るときは
-        // dd($request->session()->get('employees'));
-        // 配列を見るときは
-        // dd($request->session()->get('employees')->toArray());
-         // ビューには、コレクションで送りますので、->toArray()　はつけません
-        // if ( $request->session()->get('employees') != null){
-        //     // $employees = $request->session()->get('employees')->simplePaginate(5);
-        //     $items = $request->session()->get('employees');
-        //     $employees = $items->all()->paginate(5);
-        // } else {
-        //     // 注意 プライマリーキーのフィールド名は 'employee_id' だから、 'id'と指定するとエラー
-        //     $employees = Employee::orderBy('employee_id', 'desc')->simplePaginate(5);
-        // }
-
-
+        // 注意 プライマリーキーのフィールド名は 'employee_id' だから、 'id'と指定するとエラー
         $employees = Employee::orderBy('employee_id', 'desc')->simplePaginate(5);
 
         return view('employees.index', ['employees' => $employees]);
@@ -283,12 +269,32 @@ class EmployeesController extends Controller
         $unselected = ['D00' => '未選択'];
         // マージする
         $mergeDep = array_merge($unselected , $dep_name);
-        // dd($mergeDep);        
-        return view('employees.find', [ 'mergeDep' => $mergeDep ]);
+        // dd($mergeDep);  
+        $empleyees = []; // 空の配列
+        $result = '';      
+        return view( 'employees.find', [ 'result' => $result, 'mergeDep' => $mergeDep , 'employees' => $empleyees]);
     }
 
     public function search(Request $request)
     {
+
+        $departments = Department::all(); // セレクトボックスに一覧が必要$departmentsはコレクション
+        // dd($departments->all());
+        $depArray = $departments->all();
+        // dd($depArray[0]->department_name);
+        $dep_name = []; //配列の初期化   キーが　D01   値が 総務部  などの連想配列にしたい
+        foreach($depArray as $dep){
+            // [] にキーを指定して、連想配列を作成できます！！
+            $dep_name[$dep->department_id] = $dep->department_name;  // 注意[]を入れないと、ただの上書きになってしまいます
+        }
+        // 注意、配列変数をデバックするときには[]を入れてはいけません
+        // dd($dep_name);
+        
+        $unselected = ['D00' => '未選択'];
+        // マージする
+        $mergeDep = array_merge($unselected , $dep_name);
+
+
         $dep_id = $request->department_id;
         $emp_id = $request->employee_id;
         $word = $request->word;
@@ -296,12 +302,27 @@ class EmployeesController extends Controller
         // dd($dep_id);
         // dd($emp_id);
         // dd($word);
-        $employees = Employee::where('department_id', $dep_id)->get();
+        // $employees = Employee::where('department_id', $dep_id)->get();
+        $result = '';
+        if($dep_id == null && $emp_id == null){
+            $result = '何か入力してください';
+            $employees = [];
+           return view('employees.find', ['result' => $result, 'mergeDep' => $mergeDep ,'employees' => $employees]);
+        }else {
+            $employees = Employee::search($dep_id, $emp_id)->get();
+            if (count($employees) > 0){
+                $result = '検索結果です';
+
+            } else {
+                $result = '0件でした';
+            }
+        }
+
         // dd($employees);
         // $employees = Employee::depIdSearch($dep_id)->empIdSearch($emp_id)->nameSearch($word)->get();
         // セッションに $request->session()->put('employees', $employees) と同じ意味です
     //    return redirect('/employees')->with(['employees'=> $employees]);
-    return view('employees.find', ['employees' => $employees]);
+    return view('employees.find', ['result' => $result, 'mergeDep' => $mergeDep ,'employees' => $employees]);
     }
 
 }

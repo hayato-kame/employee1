@@ -8,6 +8,7 @@
 @endsection
 
 @section('content')
+<div class="toolbar">{!! link_to_route('employees.index', '社員一覧へ戻る',[]) !!}</div>
 
 <h3>条件を指定して社員情報を検索します。</h3>
     {{-- 'method' => 'post' は省略可 検索ボタンを押したら、検索処理を実行するので、'method' => 'post'　です  --}}
@@ -28,8 +29,18 @@
         
         {!! Form::submit('検索', ['class' => 'btn btn-primary' ]) !!}
         
-    {!! Form::close() !!}  
+    {!! Form::close() !!} 
 
+    
+    @if (count($employees) > 0)
+    <hr>
+        <p style="color: blue"></p>
+        <p style="color: red;">{{$result}}</p>
+        @include('employees.employees')
+    @else
+    <hr>
+        <p style="color: red;">{{$result}}</p>
+    @endif
 @endsection
 
 @section('footer')

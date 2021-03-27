@@ -104,16 +104,22 @@ class Employee extends Model
 
     //　スコープ
     // 
-    public function scopeDepIdSearch($query, $dep_id)
+    public function scopeSearch($query, $dep_id, $emp_id)
     {
-        return $query->where('department_id', $dep_id);
+        if(!empty($dep_id)){
+            $query->where('department_id', $dep_id);
+        }
+        if(!empty($emp_id)){
+            $query->where('employee_id', $emp_id);
+        }
+
+       
+        return $query;
+
+
     }
 
-    // スコープ
-    public function scopeEmpIdSearch($query, $emp_id)
-    {
-        return $query->where('employee_id', $emp_id);
-    }
+  
 
     // スコープ
     public function scopeNameSearch($query, $word)
