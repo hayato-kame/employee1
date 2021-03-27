@@ -251,4 +251,34 @@ class EmployeesController extends Controller
         return redirect('/employees')->with('flash_message', $f_message);
     }
 
+    public function find(Request $request)
+    {
+        $departments = Department::all(); // セレクトボックスに一覧が必要$departmentsはコレクション
+        // dd($departments->all());
+        $depArray = $departments->all();
+        // dd($depArray[0]->department_name);
+        $dep_name = []; //配列の初期化   キーが　D01   値が 総務部  などの連想配列にしたい
+        foreach($depArray as $dep){
+            // [] にキーを指定して、連想配列を作成できます！！
+            $dep_name[$dep->department_id] = $dep->department_name;  // 注意[]を入れないと、ただの上書きになってしまいます
+        }
+        // 注意、配列変数をデバックするときには[]を入れてはいけません
+        // dd($dep_name);
+        
+        $unselected = ['D00' => '未選択'];
+        // マージする
+        $mergeDep = array_merge($unselected , $dep_name);
+        // dd($mergeDep);        
+        return view('employees.find', [ 'mergeDep' => $mergeDep ]);
+    }
+
+    public function search(Request $request)
+    {
+        // $depId = $request->department_id;
+        // $empId = $request->employee_id;
+        // $word = $request->word;
+
+       
+    }
+
 }
